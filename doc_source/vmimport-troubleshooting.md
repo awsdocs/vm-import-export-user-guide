@@ -2,7 +2,7 @@
 
 When importing or exporting a virtual machine \(VM\), most errors occur because of an attempt to do something that isn't supported\. To avoid these errors, be sure to check the requirements and limitations carefully\.
 
-
+**Topics**
 + [ImportImage Errors](#import-image-errors)
 + [ImportInstance Errors](#import-instance-errors)
 + [VM Export Errors](#instance-export-errors)
@@ -68,21 +68,14 @@ The EC2 Config Service requires the Microsoft \.NET Framework 3\.5 Service Pack 
 When you import a VM using the `ec2-import-instance` command, the import task might stop before its completed, and then fail\. To investigate what went wrong, you can use the [ec2\-describe\-conversion\-tasks](http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeConversionTasks.html) command to describe the instance\.
 
 When you receive the FirstBootFailure error message, it means that your virtual disk image was unable to perform one of the following steps:
-
 + Boot up and start Windows\.
-
 + Install Amazon EC2 networking and disk drivers\.
-
 + Use a DHCP\-configured network interface to retrieve an IP address\.
-
 + Activate Windows using the Amazon EC2 Windows volume license\.
 
 The following best practices can help you to avoid Windows first boot failures:
-
 + **Disable anti\-virus and anti\-spyware software and firewalls** — These types of software can prevent installing new Windows services or drivers or prevent unknown binaries from running\. Software and firewalls can be re\-enabled after importing\.
-
 + **Do not harden your operating system** — Security configurations, sometimes called hardening, can prevent unattended installation of Amazon EC2 drivers\. There are numerous Windows configuration settings that can prevent import\. These settings can be reapplied once imported\.
-
 + **Disable or delete multiple bootable partitions** — If your virtual machine boots and requires you to choose which boot partition to use, the import may fail\.
 
 This inability of the virtual disk image to boot up and establish network connectivity could be due to any of the following causes:
@@ -124,11 +117,8 @@ Linux VMs with multi\-boot volumes or multiple `/etc` directories are not suppor
 
 **Linux is not supported on the requested instance**  
 Linux VMs can be imported to specific instance types\. Try again using one of the following supported instance types\.  
-
-+ General purpose: `t2.micro` | `t2.small` | `t2.medium` | `m3.medium` | `m3.large` | `m3.xlarge` | `m3.2xlarge`
-
-+ Compute optimized: `c3.large` | `c3.xlarge` | `c3.2xlarge` | `c3.4xlarge` | `c3.8xlarge` | `cc1.4xlarge`
-
-+ Memory optimized: `r3.large` | `r3.xlarge` | `r3.2xlarge` | `r3.4xlarge` | `r3.8xlarge`
-
-+ Storage optimized: `i2.xlarge` | `i2.2xlarge` | `i2.4xlarge` | `i2.8xlarge`
++ General purpose: `t2.micro` \| `t2.small` \| `t2.medium` \| `m3.medium` \| `m3.large` \| `m3.xlarge` \| `m3.2xlarge`
++ Compute optimized: `c3.large` \| `c3.xlarge` \| `c3.2xlarge` \| `c3.4xlarge` \| `c3.8xlarge` \| `cc1.4xlarge` \| `cc2.8xlarge`
++ Memory optimized: `r3.large` \| `r3.xlarge` \| `r3.2xlarge` \| `r3.4xlarge` \| `r3.8xlarge` \| `cr1.8xlarge`
++ Storage optimized: `i2.xlarge` \| `i2.2xlarge` \| `i2.4xlarge` \| `i2.8xlarge` \| `hi1.4xlarge` \| `hi1.8xlarge`
++ Accelerated computing: `cg1.4xlarge`
