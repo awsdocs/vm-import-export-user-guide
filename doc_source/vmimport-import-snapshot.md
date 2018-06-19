@@ -3,9 +3,7 @@
 VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You can create an EBS volume from an EBS snapshot, and then attach the volume to an instance\.
 
 **Prerequisites**
-
 + The following disk formats are supported: Virtual Hard Disk \(VHD/VHDX\), ESX Virtual Machine Disk \(VMDK\), and raw\.
-
 + You must first upload your disks to Amazon S3\.
 
 **To import a disk image**
