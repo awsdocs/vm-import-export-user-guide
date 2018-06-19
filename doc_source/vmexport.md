@@ -7,7 +7,7 @@ When you export an instance, you are charged the standard Amazon S3 rates for th
 
 If you're using VMware vSphere, you can alternatively use the AWS Connector for vCenter to export a VM from Amazon EC2\. For more information, see [Exporting a Migrated Amazon EC2 Instance](http://docs.aws.amazon.com/amp/latest/userguide/migrate-vms.html#export-instance) in the *AWS Management Portal for vCenter User Guide*\.
 
-
+**Topics**
 + [Prerequisites](#vmexport-prerequisites)
 + [Limitations](#vmexport-limits)
 + [Export an Instance](#export-instance)
@@ -37,11 +37,8 @@ You can create an Amazon S3 bucket for storing the exported instances and grant 
    1. Choose **Add More Permissions**\. 
 
    1. For **Grantee**, type the appropriate region\-specific canonical account ID:
-
       + **China \(Beijing\)**: 834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f
-
       + **AWS GovCloud \(US\)**: af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602
-
       + **All other regions**: c4d8eabf8db69dbe46bfe0e517100c554f01200b104d59cd408e777ba442a322
 
    1. Select **Upload/Delete** and **View Permissions**\.
@@ -53,27 +50,16 @@ For more information, see [Editing Bucket Permissions](http://docs.aws.amazon.co
 ## Limitations<a name="vmexport-limits"></a>
 
 Exporting instances and volumes is subject to the following limitations:
-
 + You can't export an instance from Amazon EC2 unless you previously imported it into Amazon EC2 from another virtualization environment\.
-
 + You must export your instances and volumes to one of the following image formats that your virtualization environment supports:
-
   + Open Virtual Appliance \(OVA\), which is compatible with VMware vSphere versions 4, 5, and 6\.
-
   + Virtual Hard Disk \(VHD\), which is compatible with Citrix Xen and Microsoft Hyper\-V virtualization products\.
-
   + Stream\-optimized ESX Virtual Machine Disk \(VMDK\), which is compatible with VMware ESX and VMware vSphere versions 4, 5, and 6\.
-
 + You can't export Amazon EBS data volumes\.
-
 + You can't export an instance that has more than one virtual disk\.
-
 + You can't export an instance that has more than one network interface\.
-
 + You can't export an instance from Amazon EC2 if you've shared it from another AWS account\.
-
 + You can't have more than five export tasks per region in progress at the same time\.
-
 + VMs with volumes larger than 1 TiB are not supported\.
 
 ## Export an Instance<a name="export-instance"></a>
@@ -89,10 +75,10 @@ aws ec2 create-instance-export-task --instance-id id --target-environment target
 The ID of the instance\.
 
 *target\_environment*  
-The target environment \(`vmware` | `citrix` | `microsoft`\)\.
+The target environment \(`vmware` \| `citrix` \| `microsoft`\)\.
 
 *disk\_image\_format*  
-The disk image format \(`VMDK` | `VHD`\)\.
+The disk image format \(`VMDK` \| `VHD`\)\.
 
 *bucket*  
 The name of the S3 bucket\.

@@ -5,7 +5,7 @@ You can use VM Import/Export to import virtual machine \(VM\) images from your v
 **Note**  
 For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
 
-
+**Topics**
 + [Export Your VM from its Virtualization Environment](#export-vm-image)
 + [Import Your VM as an Image](#import-vm-image)
 
@@ -14,18 +14,15 @@ For most VM import needs, we recommend that you use the AWS Server Migration Ser
 After you have prepared your VM for export, you can export it from your virtualization environment\. When importing a VM as an image, you can import disks in the following formats: Open Virtualization Archive \(OVA\), Virtual Machine Disk \(VMDK\), Virtual Hard Disk \(VHD/VHDX\), and raw\. With some virtualization environments, you would export to Open Virtualization Format \(OVF\), which typically includes one or more VMDK, VHD, or VHDX files\.
 
 For more information, see the documentation for your virtualization environment\. For example:
-
 + **VMware** — [Export an OVF Template](http://pubs.vmware.com/vsphere-4-esx-vcenter/topic/com.vmware.vsphere.vmadmin.doc_41/vc_client_help/importing_and_exporting_virtual_appliances/t_export_a_virtual_machine.html) on the VMware website
-
 + **Citrix** — [Export VMs as OVF/OVA](http://docs.citrix.com/en-us/xencenter/6-2/xs-xc-vms-exportimport/xs-xc-vms-export-ovf.html) on the Citrix website
-
 + **Microsoft Hyper\-V** — [Overview of exporting and importing a virtual machine](https://technet.microsoft.com/en-us/library/hh831535.aspx) on the Microsoft website
 
 ## Import Your VM as an Image<a name="import-vm-image"></a>
 
 After exporting your VM from your virtualization environment, you can import it to Amazon EC2\. The import process is the same regardless of the origin of the VM\.
 
-
+**Topics**
 + [Prerequisites](#import-image-prereqs)
 + [Upload the Image to Amazon S3](#upload-image)
 + [Import the VM](#import-vm)
@@ -195,29 +192,23 @@ The following is an example `containers.json` file\.
 Use the [describe\-import\-image\-tasks](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-image-tasks.html) command to return the status of an import task\.
 
 Status values include the following:
-
 + `active` — The import task is in progress\.
-
 + `deleting` — The import task is being canceled\.
-
 + `deleted` — The import task is canceled\.
-
 + `updating` — Import status is updating\.
-
 + `validating` — The imported image is being validated\.
-
++ `validated` — The imported image was validated\.
 + `converting` — The imported image is being converted into an AMI\.
-
 + `completed` — The import task is completed and the AMI is ready to use\.
 
 ```
 aws ec2 describe-import-image-tasks --import-task-ids import-ami-abcd1234
 ```
 
-You can also use the older EC2 CLI command ec2\-describe\-conversion\-tasks to achieve the same purpose:
+You can also use the older EC2 CLI command ec2 describe\-conversion\-tasks to achieve the same purpose:
 
 ```
-aws ec2-describe-conversion-tasks --region <region>
+aws ec2 describe-conversion-tasks --region <region>
 ```
 
 ### \(Optional\) Cancel an Import Task<a name="cancel-upload"></a>
@@ -233,15 +224,10 @@ aws ec2 cancel-import-task --import-task-id import-ami-abcd1234
 Now that you have an AMI, you can launch it as an instance or copy it to another region\. For more information, see the following topics in the Amazon EC2 documentation\.
 
 **Windows**
-
 + [Launching an Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
-
 + [Installing the Latest Version of EC2Config](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) \(recommended\)
-
 + [Copying an AMI](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
 
 **Linux**
-
 + [Launching an Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
-
 + [Copying an AMI](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
