@@ -274,7 +274,9 @@ These options strip all unique system information from the Microsoft Windows ins
 When importing a VM, AWS modifies the file system to make the imported VM accessible to the customer\. The following actions may occur:
 + \[Linux\] Installing Citrix PV drivers either directly in OS or modify initrd/initramfs to contain them\.
 + \[Linux\] Modifying network scripts to replace static IPs with dynamic IPs\.
+
 + \[Linux\] Modifying `/etc/fstab`, commenting out invalid entries and replacing device names with UUIDs\. If no matching UUID can be found for a device, the `nofail` option is added to the device description\. You will need to correct the device naming and remove `nofail` after import\. As a best practice when preparing your VMs fopr import, we recommend that you specify your VM disk devices by UUID rather than device name\.
+
 
   Entries in `/etc/fstab` that contain non\-standard file system types \(cifs, smbfs, vboxsf, sshfs, etc\.\) will be disabled\.
 + \[Linux\] Modifying grub bootloader settings such as the default entry and timeout\.
