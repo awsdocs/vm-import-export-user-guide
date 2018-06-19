@@ -98,12 +98,18 @@ If you encounter an error stating that "This policy contains invalid Json," doub
             "Effect":"Allow",
             "Action":[
                "s3:GetBucketLocation",
-               "s3:GetObject",
                "s3:ListBucket" 
             ],
             "Resource":[
                "arn:aws:s3:::disk-image-file-bucket",
-               "arn:aws:s3:::disk-image-file-bucket/*"
+            ]
+         },
+         {  "Effect":"Allow",
+            "Action":[
+               "s3:GetObject"
+            ],
+            "Resource":[
+            "arn:aws:s3:::disk-image-file-bucket/*"
             ]
          },
          {
@@ -111,7 +117,8 @@ If you encounter an error stating that "This policy contains invalid Json," doub
             "Action":[
                "ec2:ModifySnapshotAttribute",
                "ec2:CopySnapshot",
-               "ec2:RegisterImage",
+               "ec2:ImportImage",
+               "ec2:RegisterImage",
                "ec2:Describe*"
             ],
             "Resource":"*"
@@ -230,4 +237,6 @@ Now that you have an AMI, you can launch it as an instance or copy it to another
 
 **Linux**
 + [Launching an Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
+
 + [Copying an AMI](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
+
