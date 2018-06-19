@@ -137,7 +137,7 @@ Importing AMIs and snapshots is subject to the following limitations:
 
 ## Required Permissions for IAM Users<a name="iam-permissions-image"></a>
 
-If you're logged on as an AWS Identity and Access Management \(IAM\) user, you'll need the following permissions in your IAM policy to useVM Import/Export:
+If you're logged on as an AWS Identity and Access Management \(IAM\) user, you'll need the following permissions in your IAM policy to use VM Import/Export:
 
 ```
 {
