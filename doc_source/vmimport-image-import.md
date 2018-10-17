@@ -118,8 +118,8 @@ If you encounter an error stating that "This policy contains invalid Json," doub
             "Action":[
                "ec2:ModifySnapshotAttribute",
                "ec2:CopySnapshot",
-               "ec2:ImportImage",
-               "ec2:RegisterImage",
+               "ec2:ImportImage",
+               "ec2:RegisterImage",
                "ec2:Describe*"
             ],
             "Resource":"*"
