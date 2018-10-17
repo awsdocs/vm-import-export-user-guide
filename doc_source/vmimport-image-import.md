@@ -110,7 +110,7 @@ If you encounter an error stating that "This policy contains invalid Json," doub
                "s3:GetObject"
             ],
             "Resource":[
-            "arn:aws:s3:::disk-image-file-bucket/*"
+                "arn:aws:s3:::disk-image-file-bucket/*"
             ]
          },
          {
