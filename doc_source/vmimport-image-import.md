@@ -228,15 +228,18 @@ aws ec2 cancel-import-task --import-task-id import-ami-abcd1234
 
 ### Next Steps<a name="next-steps"></a>
 
-Now that you have an AMI, you can launch it as an instance or copy it to another region\. For more information, see the following topics in the Amazon EC2 documentation\.
+Now that you have an AMI, you can launch it as an instance or copy it to another region\. Note, to use some Instance types, you will have to Launch an Instance from the AMI you just created, then install drivers and create a new AMI\.  The reason for this is the VM Import automation on the backend does not yet include these drivers\.  The drivers needed may include for Enhanced Networking and also NVMe\. You must Launch an Instance from the first AMI you created above, install the drivers, then you are able to create an AMI image from the resulting Instance which should work across any Instance type you seek to Launch\.  For more information, see the following topics in the Amazon EC2 documentation\.
 
 **Windows**
 + [Launching an Instance](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
 + [Installing the Latest Version of EC2Config](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) \(recommended\)
 + [Copying an AMI](http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
++ [Enhanced Networking on Windows](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/enhanced-networking.html)
++ [AWS NVMe Drivers for Windows Instances] (https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/aws-nvme-drivers.html)
 
 **Linux**
 + [Launching an Instance](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
 
 + [Copying an AMI](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
++ [Enhanced Networking on Linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking.html)
 
