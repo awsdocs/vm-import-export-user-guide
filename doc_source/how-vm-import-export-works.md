@@ -23,7 +23,7 @@ The following table summarizes the key differences between image import and inst
 
 ## Image Import<a name="image-import"></a>
 
-First, you prepare your virtual machine for export, and then export it using one of the supported formats\. Next, you start the import task, which uploads the VM image to Amazon S3 and creates an AMI\. After the import task is complete, you can launch an instance from the AMI\. If you want, you can copy the AMI to other regions so that you can launch instances in those regions\.
+First, you prepare your virtual machine for export, and then export it using one of the supported formats\. Next, you upload the VM image to Amazon S3 and then initiate the import task\. After the import task is complete, you can launch an instance from the AMI\. If you want, you can copy the AMI to other regions so that you can launch instances in those regions\.
 
 The following diagram shows the process of exporting a VM from your virtualization environment to Amazon EC2 as an AMI\.
 
@@ -31,7 +31,7 @@ The following diagram shows the process of exporting a VM from your virtualizati
 
 ## Instance Import<a name="instance-import"></a>
 
-First, you prepare your virtual machine for export, and then export it using one of the supported formats\. Next, you start the import task, which uploads the VM image to Amazon S3 and launches it as a stopped instance\. After the import task is complete, you can create an AMI from the instance\. If you want, you can copy the AMI to other regions so that you can launch instances in those regions\. You can also export a previously imported instance to your virtualization environment\.
+First, you prepare your virtual machine for export, and then export it using one of the supported formats\. Next, you upload the VM image to Amazon S3 and then initiate the import task which launches it as a stopped instance\. After the import task is complete, you can create an AMI from the instance\. If you want, you can copy the AMI to other regions so that you can launch instances in those regions\. You can also export a previously imported instance to your virtualization environment\.
 
 The following diagram shows the process of exporting a VM from your virtualization environment to Amazon EC2 as an instance\.
 
