@@ -1,22 +1,22 @@
 # Exporting an Instance as a VM Using VM Import/Export<a name="vmexport"></a>
 
-If you have previously used VM Import to import a virtual machine into Amazon EC2, you can export that EC2 instance to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\. Exporting an instance that you previously imported is useful when you want to deploy a copy of your EC2 instance in your on\-site virtualization environment\.
+Exporting a VM is useful when you want to deploy a copy of your Amazon EC2 instance in your on\-site virtualization environment\. You can export most EC2 instances to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\.
 
 **Important**  
 When you export an instance, you are charged the standard Amazon S3 rates for the bucket where the exported VM is stored\. In addition, there might be a small charge for the temporary use of an Amazon EBS snapshot\. For more information about Amazon S3 pricing, see [Amazon Simple Storage Service Pricing](https://aws.amazon.com/s3/pricing/)\.
 
-If you're using VMware vSphere, you can alternatively use the AWS Connector for vCenter to export a VM from Amazon EC2\. For more information, see [Exporting a Migrated Amazon EC2 Instance](http://docs.aws.amazon.com/amp/latest/userguide/migrate-vms.html#export-instance) in the *AWS Management Portal for vCenter User Guide*\.
+If you're using VMware vSphere, you can alternatively use the AWS Connector for vCenter to export a VM from Amazon EC2\. For more information, see [Exporting a Migrated Amazon EC2 Instance](https://docs.aws.amazon.com/amp/latest/userguide/migrate-vms.html#export-instance) in the *AWS Management Portal for vCenter User Guide*\.
 
 **Topics**
 + [Prerequisites](#vmexport-prerequisites)
-+ [Limitations](#vmexport-limits)
++ [Considerations When Using VM Export](#vmexport-limits)
 + [Export an Instance](#export-instance)
 + [Monitor Instance Export](#vmexport-monitor)
 + [Cancel or Stop Instance Export](#vmexport-cancel)
 
 ## Prerequisites<a name="vmexport-prerequisites"></a>
 
-To export a VM from Amazon EC2, install the AWS CLI on the instance\. For more information, see the [AWS Command Line Interface User Guide](http://docs.aws.amazon.com/cli/latest/userguide/)\.
+To export a VM from Amazon EC2, install the AWS CLI on the instance\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
 You can create an Amazon S3 bucket for storing the exported instances and grant VM Import/Export permission to access the bucket\. If you already have a bucket and want to use it, you can use it instead of creating a bucket\.
 
@@ -28,7 +28,7 @@ You can create an Amazon S3 bucket for storing the exported instances and grant 
 
 1. In the **Create a Bucket** dialog box, do the following:
 
-   1. For **Bucket Name**, type a name for your bucket\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
+   1. For **Bucket Name**, type a name for your bucket\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
    1. For **Region**, select a region\.
 
@@ -38,19 +38,19 @@ You can create an Amazon S3 bucket for storing the exported instances and grant 
 
    1. For **Grantee**, type the appropriate region\-specific canonical account ID:
       + **China \(Beijing\)**: 834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f
-      + **AWS GovCloud \(US\)**: af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602
+      + **AWS GovCloud \(US\-West\)**: af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602
       + **All other regions**: c4d8eabf8db69dbe46bfe0e517100c554f01200b104d59cd408e777ba442a322
 
    1. Select **Upload/Delete** and **View Permissions**\.
 
    1. Choose **Save**\.
 
-For more information, see [Editing Bucket Permissions](http://docs.aws.amazon.com/AmazonS3/latest/user-guide/EditingBucketPermissions.html) in the *Amazon Simple Storage Service Console User Guide*\.
+For more information, see [Editing Bucket Permissions](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/EditingBucketPermissions.html) in the *Amazon Simple Storage Service Console User Guide*\.
 
-## Limitations<a name="vmexport-limits"></a>
+## Considerations When Using VM Export<a name="vmexport-limits"></a>
 
 Exporting instances and volumes is subject to the following limitations:
-+ You can't export an instance from Amazon EC2 unless you previously imported it into Amazon EC2 from another virtualization environment\.
++ You cannot export a VM if it contains third\-party software provided by AWS\. For example, VM Export cannot export Windows or SQL Server instances, or any instance created from an image in the AWS Marketplace\.
 + You must export your instances and volumes to one of the following image formats that your virtualization environment supports:
   + Open Virtual Appliance \(OVA\), which is compatible with VMware vSphere versions 4, 5, and 6\.
   + Virtual Hard Disk \(VHD\), which is compatible with Citrix Xen and Microsoft Hyper\-V virtualization products\.
@@ -64,7 +64,7 @@ Exporting instances and volumes is subject to the following limitations:
 
 ## Export an Instance<a name="export-instance"></a>
 
-To export your instance, use the [create\-instance\-export\-task](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-instance-export-task.html) command\. You must provide the information required to properly export the instance to the selected virtualization format\. The exported file is saved in the S3 bucket that you specify\.
+To export your instance, use the [create\-instance\-export\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-instance-export-task.html) command\. You must provide the information required to properly export the instance to the selected virtualization format\. The exported file is saved in the S3 bucket that you specify\.
 
 ```
 aws ec2 create-instance-export-task --instance-id id --target-environment target_environment \
@@ -88,7 +88,7 @@ The image is written to an object in the S3 bucket using the following S3 key: *
 
 ## Monitor Instance Export<a name="vmexport-monitor"></a>
 
-To monitor the export of your instance, use the following [describe\-export\-tasks](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-export-tasks.html) command:
+To monitor the export of your instance, use the following [describe\-export\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-export-tasks.html) command:
 
 ```
 aws ec2 describe-export-tasks --export-task-ids export-i-12345678
@@ -96,7 +96,7 @@ aws ec2 describe-export-tasks --export-task-ids export-i-12345678
 
 ## Cancel or Stop Instance Export<a name="vmexport-cancel"></a>
 
-You can use the following [cancel\-export\-task](http://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-export-task.html) command to cancel or stop the export of an instance up to the point of completion\.
+You can use the following [cancel\-export\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-export-task.html) command to cancel or stop the export of an instance up to the point of completion\.
 
 ```
 aws ec2 cancel-export-task --export-task-id export-i-12345678
