@@ -18,7 +18,24 @@ The specified image format is not supported\. Retry the operation using one of t
 You must include the `file://` prefix before the policy document name\.
 
 **The service role <vmimport> does not exist or does not have sufficient permissions for the service to continue**  
-The VM import service role is missing or incorrect\. You may also receive this error if the IAM user trying to start the import does not have sufficient privileges to Amazon EC2 resources\.
+The VM import service role is missing or incorrect\. You may also receive this error if the IAM user trying to start the import does not have sufficient access privileges on Amazon EC2 resources\.   
+This error can also occur if the user calling `ImportImage` has `Decrypt` permission but the vmimport role does not\. If you use [Server\-Side Encryption with AWS KMS–Managed Keys \(SSE\-KMS\)](https://docs.aws.amazon.com/AmazonS3/latest/dev/UsingKMSEncryption.html) to secure your at\-rest data in Amazon S3, you need to assign additional `Decrypt` permission to your service role as shown in the following JSON code:
+
+```
+{
+   "Sid":"Allow vmimport to decrypt SSE-KMS key",
+   "Effect":"Allow",
+   "Principal":{
+      "AWS":[
+         "arn:aws:iam::accountid:role/vmimport"
+      ]
+   },
+   "Action":[
+      "kms:Decrypt"
+   ],
+   "Resource":"*"
+}
+```
 
 ## ImportInstance Errors<a name="import-instance-errors"></a>
 
@@ -65,7 +82,7 @@ The EC2 Config Service requires the Microsoft \.NET Framework 3\.5 Service Pack 
 
 ### FirstBootFailure: This import request failed because the Windows instance failed to boot and establish network connectivity\.<a name="FirstBootFailures"></a>
 
-When you import a VM using the `ec2-import-instance` command, the import task might stop before its completed, and then fail\. To investigate what went wrong, you can use the [ec2\-describe\-conversion\-tasks](http://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeConversionTasks.html) command to describe the instance\.
+When you import a VM using the `ec2-import-instance` command, the import task might stop before its completed, and then fail\. To investigate what went wrong, you can use the [ec2\-describe\-conversion\-tasks](https://docs.aws.amazon.com/AWSEC2/latest/CommandLineReference/ApiReference-cmd-DescribeConversionTasks.html) command to describe the instance\.
 
 When you receive the FirstBootFailure error message, it means that your virtual disk image was unable to perform one of the following steps:
 + Boot up and start Windows\.

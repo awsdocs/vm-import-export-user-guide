@@ -15,8 +15,14 @@ After you have prepared your VM for export, you can export it from your virtuali
 
 For more information, see the documentation for your virtualization environment\. For example:
 + **VMware** — [Export an OVF Template](http://pubs.vmware.com/vsphere-4-esx-vcenter/topic/com.vmware.vsphere.vmadmin.doc_41/vc_client_help/importing_and_exporting_virtual_appliances/t_export_a_virtual_machine.html) on the VMware website
-+ **Citrix** — [Export VMs as OVF/OVA](http://docs.citrix.com/en-us/xencenter/6-2/xs-xc-vms-exportimport/xs-xc-vms-export-ovf.html) on the Citrix website
++ **Citrix** — [Import and export VMs](https://docs.citrix.com/en-us/xenserver/current-release/vms/import-export.html) on the Citrix website
 + **Microsoft Hyper\-V** — [Overview of exporting and importing a virtual machine](https://technet.microsoft.com/en-us/library/hh831535.aspx) on the Microsoft website
++ **Microsoft Azure** — [Download a Windows VHD from Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/download-vhd) or [Download a Linux VHD from Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/download-vhd) on the Microsoft website
+**Note**  
+From Azure Portal, choose the VM you want to migrate, then choose **Disks**\. For each disk \(either OS or data\), complete the following:  
+Choose the disk\.
+Choose **Create Snapshot**\.
+On the completed snapshot resource, choose **Export**\. This creates a URL that you can use to download the virtual image\.
 
 ## Import Your VM as an Image<a name="import-vm-image"></a>
 
@@ -46,7 +52,7 @@ VM Import requires an Amazon S3 bucket to store your disk images, in the region 
 
 1. In the **Create a Bucket** dialog box, do the following:
 
-   1. For **Bucket Name**, type a name for your bucket\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](http://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
+   1. For **Bucket Name**, type a name for your bucket\. This name must be unique across all existing bucket names in Amazon S3\. In some regions, there might be additional restrictions on bucket names\. For more information, see [Bucket Restrictions and Limitations](https://docs.aws.amazon.com/AmazonS3/latest/dev/BucketRestrictions.html) in the *Amazon Simple Storage Service Developer Guide*\.
 
    1. For **Region**, select the region that you want for your AMI\.
 
@@ -80,11 +86,12 @@ VM Import requires a role to perform certain operations in your account, such as
 
    You can save the file anywhere on your computer\. Take note of the location of the file, because you'll specify the file in the next step\.
 
-1. Use the [create\-role](http://docs.aws.amazon.com/cli/latest/reference/iam/create-role.html) command to create a role named `vmimport` and give VM Import/Export access to it\. Ensure that you specify the full path to the location of the `trust-policy.json` file, and that you prefix `file://` to it:
+1. Use the [create\-role](https://docs.aws.amazon.com/cli/latest/reference/iam/create-role.html) command to create a role named `vmimport` and give VM Import/Export access to it\. Ensure that you specify the full path to the location of the `trust-policy.json` file, and that you prefix `file://` to it:
 
    ```
-   aws iam create-role --role-name vmimport --assume-role-policy-document file://trust-policy.json
+   aws iam create-role --role-name vmimport --assume-role-policy-document "file://trust-policy.json"
    ```
+
 **Note**  
 If you encounter an error stating that "This policy contains invalid Json," double\-check that the path to the JSON file is provided correctly\.
 
@@ -98,18 +105,12 @@ If you encounter an error stating that "This policy contains invalid Json," doub
             "Effect":"Allow",
             "Action":[
                "s3:GetBucketLocation",
+               "s3:GetObject",
                "s3:ListBucket" 
             ],
             "Resource":[
                "arn:aws:s3:::disk-image-file-bucket",
-            ]
-         },
-         {  "Effect":"Allow",
-            "Action":[
-               "s3:GetObject"
-            ],
-            "Resource":[
-            "arn:aws:s3:::disk-image-file-bucket/*"
+               "arn:aws:s3:::disk-image-file-bucket/*"
             ]
          },
          {
@@ -117,8 +118,7 @@ If you encounter an error stating that "This policy contains invalid Json," doub
             "Action":[
                "ec2:ModifySnapshotAttribute",
                "ec2:CopySnapshot",
-               "ec2:ImportImage",
-               "ec2:RegisterImage",
+               "ec2:RegisterImage",
                "ec2:Describe*"
             ],
             "Resource":"*"
@@ -127,28 +127,28 @@ If you encounter an error stating that "This policy contains invalid Json," doub
    }
    ```
 
-1. Use the following [put\-role\-policy](http://docs.aws.amazon.com/cli/latest/reference/iam/put-role-policy.html) command to attach the policy to the role created above\. Ensure that you specify the full path to the location of the `role-policy.json` file\.
+1. Use the following [put\-role\-policy](https://docs.aws.amazon.com/cli/latest/reference/iam/put-role-policy.html) command to attach the policy to the role created above\. Ensure that you specify the full path to the location of the `role-policy.json` file\.
 
    ```
-   aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document file://role-policy.json
+   aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document "file://role-policy.json"
    ```
 
-For more information about IAM roles, see [IAM Roles](http://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html) in the *IAM User Guide*\.
+For more information about IAM roles, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html) in the *IAM User Guide*\.
 
 ### Upload the Image to Amazon S3<a name="upload-image"></a>
 
-Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice\. For information about uploading files through the S3 console, see [Uploading Objects into Amazon S3](http://docs.aws.amazon.com/AmazonS3/latest/user-guide/UploadingObjectsintoAmazonS3.html)\. For information about the Enhanced Uploader Java applet, see [Using the Enhanced Uploader](http://docs.aws.amazon.com/AmazonS3/latest/user-guide/enhanced-uploader.html)\.
+Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice\. For information about uploading files through the S3 console, see [Uploading Objects into Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/UploadingObjectsintoAmazonS3.html)\. For information about the Enhanced Uploader Java applet, see [Using the Enhanced Uploader](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enhanced-uploader.html)\.
 
 ### Import the VM<a name="import-vm"></a>
 
-After you upload your VM image file to Amazon S3, you can use the AWS CLI to import the image\. These tools accept either the Amazon S3 bucket and path to the file or a URL for a public Amazon S3 file\. Private Amazon S3 files require a [signed GET URL]( http://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html)\.
+After you upload your VM image file to Amazon S3, you can use the AWS CLI to import the image\. These tools accept either the Amazon S3 bucket and path to the file or a URL for a public Amazon S3 file\. Private Amazon S3 files require a [signed GET URL]( https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html)\.
 
-The following examples use the AWS CLI command [import\-image](http://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html) to create import tasks\.
+The following examples use the AWS CLI command [import\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html) to create import tasks\.
 
 **Example 1: Import an OVA**
 
 ```
-aws ec2 import-image --description "Windows 2008 OVA" --license-type <value> --disk-containers file://containers.json
+aws ec2 import-image --description "Windows 2008 OVA" --license-type <value> --disk-containers "file://containers.json"
 ```
 
 The following is an example `containers.json` file\.
@@ -168,7 +168,7 @@ The following is an example `containers.json` file\.
 **Example 2: Import Multiple Disks**
 
 ```
-$ C:\> aws ec2 import-image --description "Windows 2008 VMDKs" --license-type <value> --disk-containers file://containers.json
+$ C:\> aws ec2 import-image --description "Windows 2008 VMDKs" --license-type <value> --disk-containers "file://containers.json"
 ```
 
 The following is an example `containers.json` file\.
@@ -196,7 +196,7 @@ The following is an example `containers.json` file\.
 
 ### Check the Status of the Import Task<a name="check-import-task-status"></a>
 
-Use the [describe\-import\-image\-tasks](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-image-tasks.html) command to return the status of an import task\.
+Use the [describe\-import\-image\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-image-tasks.html) command to return the status of an import task\.
 
 Status values include the following:
 + `active` — The import task is in progress\.
@@ -220,7 +220,7 @@ aws ec2 describe-conversion-tasks --region <region>
 
 ### \(Optional\) Cancel an Import Task<a name="cancel-upload"></a>
 
-Use the [cancel\-import\-task](http://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command to cancel an active import task\.
+Use the [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command to cancel an active import task\.
 
 ```
 aws ec2 cancel-import-task --import-task-id import-ami-abcd1234
@@ -229,6 +229,9 @@ aws ec2 cancel-import-task --import-task-id import-ami-abcd1234
 ### Next Steps<a name="next-steps"></a>
 
 For some operating systems, the device drivers for enhanced networking and NVMe block devices that are required by [Nitro\-based instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) are not installed automatically during import\. To install these drivers manually, use the directions in the following documentation\. Next, create a new AMI from the customized instance\.
+
+**Note**  
+Some device drivers, such as the drivers for Amazon EC2 enhanced networking and for NVMe block devices on [Nitro\-based instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), are not installed automatically during import\. If you require these for your instance type, you must install them manually\. To do this, launch an instance from your newly imported AMI, install the needed drivers using instructions available from the OS\-specific links below, and then create a new AMI from the customized instance\.
 
 **Windows**
 + \(Recommended\) [Installing the Latest Version of EC2Config](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) or [Installing the Latest Version of EC2Launch](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2launch-download.html)
@@ -248,3 +251,14 @@ After you have an AMI with the required drivers, you can launch it as an instanc
 **Linux**
 + [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
 + [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
+=======
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
++ [Installing the Latest Version of EC2Config](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) \(recommended\)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
++ [Enhanced Networking on Windows](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/enhanced-networking.html)
++ [AWS NVMe Drivers for Windows Instances](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/aws-nvme-drivers.html)
+
+**Linux**
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
++ [Enhanced Networking on Linux](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking.html) 

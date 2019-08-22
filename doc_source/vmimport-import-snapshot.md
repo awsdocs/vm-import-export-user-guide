@@ -8,7 +8,7 @@ VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You 
 
 **To import a disk image**
 
-1. Use the following [import\-snapshot](http://docs.aws.amazon.com/cli/latest/reference/ec2/import-snapshot.html) command to import a disk\. You can specify the URL of the S3 bucket, or provide the S3 bucket name and key\.
+1. Use the following [import\-snapshot](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-snapshot.html) command to import a disk\. You can specify the URL of the S3 bucket, or provide the S3 bucket name and key\.
 
    ```
    aws ec2 import-snapshot --description "Windows 2008 VMDK" --disk-container file://containers.json
@@ -49,7 +49,7 @@ VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You 
    }
    ```
 
-1. Use the [describe\-import\-snapshot\-tasks](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to confirm that your snapshot imported successfully\.
+1. Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to confirm that your snapshot imported successfully\.
 
    ```
    aws ec2 describe-import-snapshot-tasks --import-task-ids import-snap-fgr1mmg7
@@ -80,7 +80,7 @@ VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You 
    }
    ```
 
-1. Use the following [create\-volume](http://docs.aws.amazon.com/cli/latest/reference/ec2/create-volume.html) command to create a volume from the snapshot\. You must select the Availability Zone of the instance to which you'll attach the volume\.
+1. Use the following [create\-volume](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-volume.html) command to create a volume from the snapshot\. You must select the Availability Zone of the instance to which you'll attach the volume\.
 
    ```
    aws ec2 create-volume --availability-zone us-east-1a -snapshot-id snap-1234567890abcdef0
@@ -97,7 +97,7 @@ VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You 
    }
    ```
 
-1. Use the following [attach\-volume](http://docs.aws.amazon.com/cli/latest/reference/ec2/attach-volume.html) command to attach the EBS volume that you created in the previous step to one of your existing instances\.
+1. Use the following [attach\-volume](https://docs.aws.amazon.com/cli/latest/reference/ec2/attach-volume.html) command to attach the EBS volume that you created in the previous step to one of your existing instances\.
 
    ```
    aws ec2 attach-volume --volume-id vol-1234567890abcdef0 --instance-id i-1234567890abcdef0 --device /dev/sdf
@@ -121,13 +121,13 @@ You can cancel an import task that is in progress\.
 
 **To cancel a snapshot import task**
 
-1. Use the [describe\-import\-snapshot\-tasks](http://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to determine the ImportTaskId of the import task you want to cancel\. 
+1. Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to determine the ImportTaskId of the import task you want to cancel\. 
 
    ```
    aws ec2 describe-import-snapshot-tasks
    ```
 
-1. Cancel the task with [cancel\-import\-task](http://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html)\. command\.
+1. Cancel the task with [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html)\. command\.
 
    ```
    aws ec2 cancel-import-task --import-task-id "import-snap-abcd1234"
