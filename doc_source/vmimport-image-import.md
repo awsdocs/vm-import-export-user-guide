@@ -91,6 +91,7 @@ VM Import requires a role to perform certain operations in your account, such as
    ```
    aws iam create-role --role-name vmimport --assume-role-policy-document "file://trust-policy.json"
    ```
+
 **Note**  
 If you encounter an error stating that "This policy contains invalid Json," double\-check that the path to the JSON file is provided correctly\.
 
