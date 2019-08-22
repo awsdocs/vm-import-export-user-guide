@@ -228,12 +228,30 @@ aws ec2 cancel-import-task --import-task-id import-ami-abcd1234
 
 ### Next Steps<a name="next-steps"></a>
 
-Now that you have an AMI, you can launch it as an instance or copy it to another region\. For more information, see the following topics in the Amazon EC2 documentation\.
+For some operating systems, the device drivers for enhanced networking and NVMe block devices that are required by [Nitro\-based instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) are not installed automatically during import\. To install these drivers manually, use the directions in the following documentation\. Next, create a new AMI from the customized instance\.
 
 **Note**  
 Some device drivers, such as the drivers for Amazon EC2 enhanced networking and for NVMe block devices on [Nitro\-based instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances), are not installed automatically during import\. If you require these for your instance type, you must install them manually\. To do this, launch an instance from your newly imported AMI, install the needed drivers using instructions available from the OS\-specific links below, and then create a new AMI from the customized instance\.
 
 **Windows**
++ \(Recommended\) [Installing the Latest Version of EC2Config](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) or [Installing the Latest Version of EC2Launch](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2launch-download.html)
++ [Enabling Enhanced Networking on Windows Instances](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/enhanced-networking-ena.html)
++ [AWS NVMe Drivers for Windows Instances](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/aws-nvme-drivers.html)
+
+**Linux**
++ [Enabling Enhanced Networking on Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking-ena.html)
++ [Install or Upgrade the NVMe Driver](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nvme-ebs-volumes.html#install-nvme-driver)
+
+After you have an AMI with the required drivers, you can launch it as an instance or copy it to another Region\. For more information, see the following documentation\.
+
+**Windows**
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
+
+**Linux**
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
+=======
 + [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
 + [Installing the Latest Version of EC2Config](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/UsingConfig_Install.html) \(recommended\)
 + [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
