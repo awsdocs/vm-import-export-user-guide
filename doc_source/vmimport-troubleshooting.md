@@ -51,17 +51,17 @@ You attempted to import a differencing VHD, or there was an error in creating th
 **ClientError: Uncompressed data has invalid length**  
 The VMDK file is corrupted\. You can try repairing or recreating the VMDK file, or use a different file\.
 
-**ERROR: Bucket <MyBucketName> is not in the <RegionName> region, it's in <RegionName>**  
-The Amazon S3 bucket is not in the same region as the instance you want to import\. Try adding the `--ignore-region-affinity` option, which ignores whether the bucket's region matches the region where the import task is created\. You can also create an Amazon S3 bucket using the Amazon Simple Storage Service console and set the region to the region where you want to import the VM\. Run the command again and specify the new bucket you just created\.
+**ERROR: Bucket <MyBucketName> is not in the <RegionName> Region, it's in <RegionName>**  
+The Amazon S3 bucket is not in the same Region as the instance you want to import\. Try adding the `--ignore-region-affinity` option, which ignores whether the bucket's Region matches the Region where the import task is created\. You can also create an Amazon S3 bucket using the Amazon Simple Storage Service console and set the Region to the Region where you want to import the VM\. Run the command again and specify the new bucket you just created\.
 
 **ERROR: File uses unsupported compression algorithm 0**  
 The VMDK was created using OVA format instead of OVF format\. Create the VMDK in OVF format\.
 
 **Invalid S3 source location**  
-The command syntax or Amazon S3 bucket name is incorrect\. Create an Amazon S3 bucket in the appropriate region solely for VM Import and upload the VM files to the root of the bucket\.
+The command syntax or Amazon S3 bucket name is incorrect\. Create an Amazon S3 bucket in the appropriate Region solely for VM Import and upload the VM files to the root of the bucket\.
 
-**The given S3 bucket is not local to the region**  
-The Amazon S3 Bucket used for VM Import must reside in the same AWS region where you want to import the VM\.
+**The given S3 bucket is not local to the Region**  
+The Amazon S3 Bucket used for VM Import must reside in the same AWS Region where you want to import the VM\.
 
 ## VM Export Errors<a name="instance-export-errors"></a>
 
@@ -138,4 +138,3 @@ Linux VMs can be imported to specific instance types\. Try again using one of th
 + Compute optimized: `c3.large` \| `c3.xlarge` \| `c3.2xlarge` \| `c3.4xlarge` \| `c3.8xlarge` \| `cc1.4xlarge` \| `cc2.8xlarge`
 + Memory optimized: `r3.large` \| `r3.xlarge` \| `r3.2xlarge` \| `r3.4xlarge` \| `r3.8xlarge` \| `cr1.8xlarge`
 + Storage optimized: `i2.xlarge` \| `i2.2xlarge` \| `i2.4xlarge` \| `i2.8xlarge` \| `hi1.4xlarge` \| `hi1.8xlarge`
-+ Accelerated computing: `cg1.4xlarge`

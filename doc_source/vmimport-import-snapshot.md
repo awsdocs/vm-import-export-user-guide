@@ -1,89 +1,109 @@
 # Importing a Disk as a Snapshot Using VM Import/Export<a name="vmimport-import-snapshot"></a>
 
-VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You can create an EBS volume from an EBS snapshot, and then attach the volume to an instance\.
+VM Import/Export enables you to import your disks as Amazon EBS snapshots\. After the snapshot is created, you can create an EBS volume from the snapshot, and then attach the volume to an EC2 instance\.
 
-**Prerequisites**
+## Prerequisites<a name="import-snapshot-prerequisites"></a>
 + The following disk formats are supported: Virtual Hard Disk \(VHD/VHDX\), ESX Virtual Machine Disk \(VMDK\), and raw\.
 + You must first upload your disks to Amazon S3\.
++ If you have not already installed the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
-**To import a disk image**
+## Start an Import Snapshot Task<a name="start-import-task"></a>
 
-1. Use the following [import\-snapshot](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-snapshot.html) command to import a disk\. You can specify the URL of the S3 bucket, or provide the S3 bucket name and key\.
+Use the following [import\-snapshot](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-snapshot.html) command to import a disk\. You can specify the URL of the S3 bucket, or provide the S3 bucket name and key\.
 
-   ```
-   aws ec2 import-snapshot --description "Windows 2008 VMDK" --disk-container file://containers.json
-   ```
+```
+aws ec2 import-snapshot --description "My server VM" --disk-container "file://C:\import\containers.json"
+```
 
-   The file `containers.json` is a JSON document that contains required information\.
+The file `containers.json` is a JSON document that contains the required information\.
 
-   ```
-   {
-       "Description": "Windows 2008 VMDK",
-       "Format": "vmdk",
-       "UserBucket": {
-           "S3Bucket": "mys3bucket",
-           "S3Key": "vms/Win_2008_Server_Enterprise_R2_64-bit.vmdk"
-       }
-   }
-   ```
+```
+{
+    "Description": "My server VMDK",
+    "Format": "VMDK",
+    "UserBucket": {
+        "S3Bucket": "my-import-bucket",
+        "S3Key": "vms/my-server-vm.vmdk"
+    }
+}
+```
 
-   The following is an example response:
+The following is an example response:
 
-   ```
-   {
-       "ImportTaskId": "import-snap-abcd1234",
-       "SnapshotTaskDetail":[
-           {
-               "DiskImageSize": "0.0",
-               "Progress": "3",
-               "Status": "active",
-               "Description": "Windows 2008 VMDK",
-               "UserBucket": {
-                   "S3Bucket": "mys3bucket",
-                   "S3Key": "vms/Win_2008_Server_Enterprise_R2_64-bit.vmdk"
-               },
-               "StatusMessage": "pending"
-           }
-       ],
-       "Description": "Windows 2008 VMDK"
-   }
-   ```
+```
+{
+    "Description": "My server VM",
+    "ImportTaskId": "import-snap-1234567890abcdef0",
+    "SnapshotTaskDetail": {
+        "Description": "My server VMDK",
+        "DiskImageSize": "0.0",
+        "Format": "VMDK",
+        "Progress": "3",
+        "Status": "active",
+        "StatusMessage": "pending",
+        "UserBucket": {
+            "S3Bucket": "my-import-bucket",
+            "S3Key": "vms/my-server-vm.vmdk"
+        }
+    }
+}
+```
 
-1. Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to confirm that your snapshot imported successfully\.
+## Monitor an Import Snapshot Task<a name="check-status-import-task"></a>
 
-   ```
-   aws ec2 describe-import-snapshot-tasks --import-task-ids import-snap-fgr1mmg7
-   ```
+Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to check the status of an import snapshot task\.
 
-   The following is an example response\. The status shown is `active`, which means the import is in progress\.
+```
+aws ec2 describe-import-snapshot-tasks --import-task-ids import-snap-1234567890abcdef0
+```
 
-   ```
-   {
-       "ImportSnapshotTasks": [
-           {
-               "SnapshotTaskDetail": [
-                   "DiskImageSize": "3.115815424E9",
-                   "Progress": "22",
-                   "Status": "active",
-                   "Description": "Windows 2008 VMDK",
-                   "Format": "VMDK",
-                   "UserBucket": {
-                       "S3Bucket": "mys3bucket",
-                       "S3Key: "vms/Win_2008_Server_Enterprise_R2_64-bit.vmdk"
-                   }
-                   "StatusMessage": "Validated"
-               ],
-               "ImportTaskId": "import-snap-fgr1mmg7",
-               "Description": "Windows 2008 VMDK"
-           }
-       ]
-   }
-   ```
+The following is an example response\. The status shown is `active`, which means that the import is in progress\. The snapshot is ready to use when the status is `completed`\.
+
+```
+{
+    "ImportSnapshotTasks": [
+        {
+            "Description": "My server VM",
+            "ImportTaskId": "import-snap-1234567890abcdef0",
+            "SnapshotTaskDetail": {
+                "Description": "My server VMDK",
+                "DiskImageSize": "3.115815424E9",
+                "Format": "VMDK",
+                "Progress": "22",
+                "Status": "active",
+                "StatusMessage": "downloading/converting",
+                "UserBucket": {
+                    "S3Bucket": "my-import-bucket",
+                    "S3Key": "vms/my-server-vm.vmdk"
+                },
+            }
+        }
+    ]
+}
+```
+
+## Cancel an Import Snapshot Task<a name="cancel-import-task"></a>
+
+If you need to, you can cancel an import task that is in progress using the [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command\.
+
+```
+aws ec2 cancel-import-task --import-task-id import-snap-1234567890abcdef0
+```
+
+## Next Steps<a name="import-snapshot-next-steps"></a>
+
+You can create one or more EBS volumes from an EBS snapshot\. You can attach each EBS volume to a single EC2 instance\.
+
+The following procedure shows how to create a volume and attach it to an instance using the AWS CLI\. Alternatively, you could use the AWS Management Console\.
+
+**To create a volume and attach it to an EC2 instance**
+
+1. Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to determine the ID of the snapshot that was created by the import task\.
 
 1. Use the following [create\-volume](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-volume.html) command to create a volume from the snapshot\. You must select the Availability Zone of the instance to which you'll attach the volume\.
 
    ```
-   aws ec2 create-volume --availability-zone us-east-1a -snapshot-id snap-1234567890abcdef0
+   aws ec2 create-volume --availability-zone us-east-1a --snapshot-id snap-1234567890abcdef0
    ```
 
    The following is example output:
@@ -115,20 +135,4 @@ VM Import/Export enables you to import your disks as Amazon EBS snapshots\. You 
    }
    ```
 
-## Canceling an Import Task<a name="cancel-import-task"></a>
-
-You can cancel an import task that is in progress\. 
-
-**To cancel a snapshot import task**
-
-1. Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to determine the ImportTaskId of the import task you want to cancel\. 
-
-   ```
-   aws ec2 describe-import-snapshot-tasks
-   ```
-
-1. Cancel the task with [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html)\. command\.
-
-   ```
-   aws ec2 cancel-import-task --import-task-id "import-snap-abcd1234"
-   ```
+1. Mount the attached volume\. For more information, see the documentation for the operating system for your instance\.

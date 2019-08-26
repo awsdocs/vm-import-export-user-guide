@@ -21,5 +21,6 @@ Amazon's trademarks and trade dress may not be used in
 + [Importing a VM as an Instance Using VM Import/Export](vmimport-instance-import.md)
 + [Importing a Disk as a Snapshot Using VM Import/Export](vmimport-import-snapshot.md)
 + [Exporting an Instance as a VM Using VM Import/Export](vmexport.md)
++ [Exporting a VM Directly from an Amazon Machine Image (AMI)](vmexport_image.md)
 + [Troubleshooting VM Import/Export](vmimport-troubleshooting.md)
 + [Document History for VM Import/Export](doc-history.md)

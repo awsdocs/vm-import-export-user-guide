@@ -1,13 +1,19 @@
 # VM Import/Export Requirements<a name="vmie_prereqs"></a>
 
-Before attempting to import a VM, take action as needed to meet the following requirements\. You may also need to prepare your AWS environment by creating a service account with appropriate permissons, and you must prepare your locally hosted VM so that it will be accessible once it is imported into AWS\.
+Before attempting to import a VM, take action as needed to meet the following requirements\. You may also need to prepare your AWS environment by creating a service account with appropriate permissions, and you must prepare your locally hosted VM so that it will be accessible once it is imported into AWS\.
 
 **Note**  
 For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
 
-## Prerequisites<a name="prerequisites"></a>
+**Topics**
++ [System Requirements](#prerequisites)
++ [Licensing Options](#licensing)
++ [Limitations](#limitations-image)
++ [Required Permissions for IAM Users](#iam-permissions-image)
++ [Required Service Role](#vmimport-role)
++ [Required Configuration for VM Export](#prepare-vm-image)
 
-You can import or export a VM using the AWS CLI\. If you have not already installed the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+## System Requirements<a name="prerequisites"></a>
 
 Before you begin, you must be aware of the operating systems and image formats that VM Import/Export supports, and understand the limitations on importing instances and volumes\.
 
@@ -15,7 +21,7 @@ Before you begin, you must be aware of the operating systems and image formats t
 
 The following operating systems can be imported to and exported from Amazon EC2\.
 
-**Windows \(32\- and 64\-bit\)**
+**Windows \(Regions enabled by default\)**
 + Microsoft Windows Server 2003 \(Standard, Datacenter, Enterprise\) with Service Pack 1 \(SP1\) or later \(32\- and 64\-bit\)
 + Microsoft Windows Server 2003 R2 \(Standard, Datacenter, Enterprise\) \(32\- and 64\-bit\)
 + Microsoft Windows Server 2008 \(Standard, Datacenter, Enterprise\) \(32\- and 64\-bit\)
@@ -25,12 +31,26 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + Microsoft Windows Server 2016 \(Standard, Datacenter\) \(64\-bit only\)
 + Microsoft Windows Server 1709 \(Standard, Datacenter\) \(64\-bit only\)
 + Microsoft Windows Server 1803 \(Standard, Datacenter\) \(64\-bit only\)
++ Microsoft Windows Server 2019 \(Standard, Datacenter\) \(64\-bit only\)
 + Microsoft Windows 7 \(Home, Professional, Enterprise, Ultimate\) \(US English\) \(32\- and 64\-bit\)
 + Microsoft Windows 8 \(Home, Professional, Enterprise\) \(US English\) \(32\- and 64\-bit\)
 + Microsoft Windows 8\.1 \(Professional, Enterprise\) \(US English\) \(64\-bit only\)
 + Microsoft Windows 10 \(Home, Professional, Enterprise, Education\) \(US English\) \(64\-bit only\)
 
-**Linux/Unix \(64\-bit\)**
+**Windows \(Regions not enabled by default\) \(64\-bit only\)**
++ Microsoft Windows Server 2008 R2 \(Standard, Web Server, Datacenter, Enterprise\)
++ Microsoft Windows Server 2012 \(Standard, Datacenter\)
++ Microsoft Windows Server 2012 R2 \(Standard, Datacenter\) \(Nano Server installation not supported\)
++ Microsoft Windows Server 2016 \(Standard, Datacenter\)
++ Microsoft Windows Server 1709 \(Standard, Datacenter\)
++ Microsoft Windows Server 1803 \(Standard, Datacenter\)
++ Microsoft Windows Server 2019 \(Standard, Datacenter\)
++ Microsoft Windows 7 \(Home, Professional, Enterprise, Ultimate\) \(US English\)
++ Microsoft Windows 8 \(Home, Professional, Enterprise\) \(US English\)
++ Microsoft Windows 8\.1 \(Professional, Enterprise\) \(US English\)
++ Microsoft Windows 10 \(Home, Professional, Enterprise, Education\) \(US English\)
+
+**Linux/Unix \(64\-bit only\)**
 + Ubuntu 12\.04, 12\.10, 13\.04, 13\.10, 14\.04, 14\.10, 15\.04, 16\.04, 16\.10, 17\.04, 18\.04
 + Red Hat Enterprise Linux \(RHEL\) 5\.1\-5\.11, 6\.1\-6\.9, 7\.0\-7\.6 \(6\.0 lacks required drivers\)
 + SUSE Linux Enterprise Server 11 with Service Pack 1 and kernel 2\.6\.32\.12\-0\.7
@@ -41,7 +61,7 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + SUSE Linux Enterprise Server 12 with Service Pack 1 and kernel 3\.12\.49\-11
 + SUSE Linux Enterprise Server 12 with Service Pack 2 and kernel 4\.4
 + SUSE Linux Enterprise Server 12 with Service Pack 3 and kernel 4\.4
-+ CentOS 5\.1\-5\.11, 6\.1\-6\.6, 7\.0\-7\.6 \(6\.0 lacks required drivers\)
++ CentOS 5\.1\-5\.11, 6\.1\-6\.8, 7\.0\-7\.6 \(6\.0 lacks required drivers\)
 + Debian 6\.0\.0\-6\.0\.8, 7\.0\.0\-7\.8\.0, 8\.0\.0
 + Oracle Linux 5\.10\-5\.11 with el5uek kernel suffix
 + Oracle Linux 6\.1\-6\.10 using RHEL\-compatible kernel 2\.6\.32 or UEK kernels 3\.8\.13, 4\.1\.12
@@ -65,16 +85,15 @@ Linux instances can be imported into the following instance types:
 + Compute optimized: `c3.large` \| `c3.xlarge` \| `c3.2xlarge` \| `c3.4xlarge` \| `c3.8xlarge` \| `cc1.4xlarge` \| `cc2.8xlarge`
 + Memory optimized: `r3.large` \| `r3.xlarge` \| `r3.2xlarge` \| `r3.4xlarge` \| `r3.8xlarge` \| `cr1.8xlarge`
 + Storage optimized: `i2.xlarge` \| `i2.2xlarge` \| `i2.4xlarge` \| `i2.8xlarge` \| `hi1.4xlarge` \| `hi1.8xlarge`
-+ Accelerated computing: `cg1.4xlarge`
 
 ### Volume Types and File Systems<a name="vmimport-volume-types"></a>
 
 VM Import/Export supports importing Windows and Linux instances with the following file systems:
 
-**Windows \(32– and 64\-bit\)**  
+**Windows**  
 MBR\-partitioned volumes and GUID Partition Table \(GPT\) partitioned volumes that are formatted using the NTFS file system\. For GPT\-partitioned volumes, only VHDX is supported as an image format\.
 
-**Linux/Unix \(64\-bit\)**  
+**Linux/Unix**  
 MBR\-partitioned volumes that are formatted using the ext2, ext3, ext4, Btrfs, JFS, or XFS file system\. GUID Partition Table \(GPT\) partitioned volumes are not supported\.
 
 ## Licensing Options<a name="licensing"></a>
@@ -114,7 +133,7 @@ The following rules apply when you use your BYOL Microsoft license, either throu
   + Run on a Dedicated Host \([Dedicated Hosts](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html)\)\.
   + Launch from VMs sourced from software binaries provided by you using AWS VM Import/Export, which are subject to the current terms and abilities of AWS VM Import/Export\.
   + Designate the instances as BYOL instances\.
-  + Run the instances within your designated AWS regions, and where AWS offers the BYOL model\.
+  + Run the instances within your designated AWS Regions, and where AWS offers the BYOL model\.
   + Activate using Microsoft keys that you provide or which are used in your key management system\.
 + You must account for the fact that when you start an Amazon EC2 instance, it can run on any one of many servers within an Availability Zone\. This means that each time you start an Amazon EC2 instance \(including a stop/start\), it may run on a different server within an Availability Zone\. You must account for this fact in light of the limitations on license reassignment as described in Microsoft's document [Volume Licensing Product Terms](http://www.microsoftvolumelicensing.com/Downloader.aspx?documenttype=PT&lang=English&usg=AOvVaw3eaE46-Gb5hQg3r8RIv8S7), or consult your specific use rights to determine if your rights are consistent with this usage\.
 + You must be eligible to use the BYOL program for the applicable Microsoft software under your agreements with Microsoft, for example, under your MSDN user rights or under your Windows Software Assurance Per User Rights\. You are solely responsible for obtaining all required licenses and for complying with all applicable Microsoft licensing requirements, including the PUR/PT\. Further, you must have accepted Microsoft's End User License Agreement \(Microsoft EULA\), and by using the Microsoft Software under the BYOL program, you agree to the Microsoft EULA\.
@@ -125,12 +144,12 @@ The following rules apply when you use your BYOL Microsoft license, either throu
 Importing AMIs and snapshots is subject to the following limitations:
 + UEFI/EFI boot partitions are supported only for Windows boot volumes with VHDX as the image format\. Otherwise, a VM's boot volume must use Master Boot Record \(MBR\) partitions\. In either case, boot volume cannot exceed 2 TiB \(uncompressed\) due to MBR limitations\. Additional non\-bootable volumes may use GUID Partition Table \(GPT\) partitioning but cannot be bigger than 16 TiB\. If you are use VMIE APIs \(instead of AWS Server Migration Service\), you will have to construct a manifest file for disks larger than 4TiB\. For more information, see [VM Import Manifest](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html)\.
 **Note**  
-When AWS detects a Windows GPT boot volume with an UEFI boot partition, it converts it on\-the\-fly to an MBR boot volume with a BIOS boot partition\. This is because EC2 does not directly support GPT boot volumes\.
+When AWS detects a Windows GPT boot volume with an UEFI boot partition, it converts it on\-the\-fly to an MBR boot volume with a BIOS boot partition\. This is because EC2 does not directly support GPT boot volumes on Windows instances\.
 + An imported VM may fail to boot if the root partition is not on the same virtual hard drive as the MBR\.
 + A VM import task will fail for VMs with more than 22 volumes attached\. Additional disks can be individually imported using the `ImportSnapshot` API\.
 + AMIs with volumes using EBS encryption are not supported\.
 + Importing VMs with dual\-boot configurations is not supported\.
-+ VM Import/Export does not support VMs that use Raw Device Mapping \(RDM\)\. Only VMDK disk images are supported\.
++  VM Import/Export does not support VMs that use Raw Device Mapping \(RDM\)\. Only VMDK disk images are supported\.
 + Imported Linux VMs must use 64\-bit images\. Migrating 32\-bit Linux images is not supported\.
 + Imported Linux VMs should use default kernels for best results\. VMs that use custom Linux kernels might not migrate successfully\.
 + When preparing Amazon EC2 Linux VMs for import, make sure that at least 250 MiB of disk space is available on the root volume for installing drivers and other software\. For Microsoft Windows VMs, configure a fixed pagefile size and ensure that at least 6 GiB of free space is available on the root volume\. If Windows is configured to use the "Automatically manage paging file size for all drives", it may create 16 GB `pagefile.sys` files on the C drive of the instance\.
@@ -138,9 +157,11 @@ When AWS detects a Windows GPT boot volume with an UEFI boot partition, it conve
 + A VM migrated into a VPC does not receive a public IP address, regardless of the auto\-assign public IP setting for the subnet\. Instead, you can allocate an Elastic IP address to your account and associate it with your instance\.
 + Internet Protocol version 6 \(IPv6\) IP addresses are not supported\.
 + VMs that are created as the result of a P2V conversion are not supported\. A P2V conversion occurs when a disk image is created by performing a Linux or Windows installation process on a physical machine and then importing a copy of that Linux or Windows installation to a VM\.
-+ VM Import/Export does not install the single root I/O virtualization \(SR\-IOV\) drivers except with imports of Microsoft Windows Server 2012 R2 VMs\. These drivers are not required unless you plan to use enhanced networking, which provides higher performance \(packets per second\), lower latency, and lower jitter\. For Microsoft Windows Server 2012 R2 VMs, SR\-IOV drivers are automatically installed as a part of the import process\.
-+ VM Import/Export does not currently support VMware SEsparse delta\-file format\.
-+ Windows language packs that use UTF\-16 \(or non\-ASCII\) characters are not supported for import\. We recommend using the English language pack when importing Windows Server 2003, Windows Server 2008, and Windows Server 2012 R1 VMs\.
++  VM Import/Export does not install the single root I/O virtualization \(SR\-IOV\) drivers except with imports of Microsoft Windows Server 2012 R2 VMs\. These drivers are not required unless you plan to use enhanced networking, which provides higher performance \(packets per second\), lower latency, and lower jitter\. For Microsoft Windows Server 2012 R2 VMs, SR\-IOV drivers are automatically installed as a part of the import process\.
++  VM Import/Export does not support VMware SEsparse delta\-file format\.
++  VM Import/Export does not support Emergency Management Services \(EMS\)\. If EMS is enabled for a source Windows VM, we disable it in the imported image\.
++ Windows language packs that use UTF\-16 \(or non\-ASCII\) characters are not supported for import\. We recommend using the English language pack when importing Windows VMs\.
++ The base AMI used to launch an instance must exist when you attempt to export the instance\. If you have deleted the AMI, the export will fail\.
 
 ## Required Permissions for IAM Users<a name="iam-permissions-image"></a>
 
@@ -210,7 +231,93 @@ If you're logged in as an AWS Identity and Access Management \(IAM\) user, you'l
 }
 ```
 
-## Prepare Your VM<a name="prepare-vm-image"></a>
+## Required Service Role<a name="vmimport-role"></a>
+
+ VM Import/Export requires a role to perform certain operations on your behalf\. You must create a service role named `vmimport` with a trust relationship policy document that allows VM Import/Export to assume the role, and you must attach an IAM policy to the role\.
+
+For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html) in the *IAM User Guide*\.
+
+**To create the service role**
+
+1. Create a file named `trust-policy.json` on your computer\. Add the following policy to the file:
+
+   ```
+   {
+      "Version": "2012-10-17",
+      "Statement": [
+         {
+            "Effect": "Allow",
+            "Principal": { "Service": "vmie.amazonaws.com" },
+            "Action": "sts:AssumeRole",
+            "Condition": {
+               "StringEquals":{
+                  "sts:Externalid": "vmimport"
+               }
+            }
+         }
+      ]
+   }
+   ```
+
+1. Use the [create\-role](https://docs.aws.amazon.com/cli/latest/reference/iam/create-role.html) command to create a role named `vmimport` and grant VM Import/Export access to it\. Ensure that you specify the full path to the location of the `trust-policy.json` file that you created in the previous step, and that you include the `file://` prefix as shown the following example:
+
+   ```
+   aws iam create-role --role-name vmimport --assume-role-policy-document "file://C:\import\trust-policy.json"
+   ```
+
+1. Create a file named `role-policy.json` with the following policy, where *disk\-image\-file\-bucket* is the bucket for disk images and *export\-bucket* is the bucket for exported images:
+
+   ```
+   {
+      "Version":"2012-10-17",
+      "Statement":[
+         {
+            "Effect":"Allow",
+            "Action":[
+               "s3:GetBucketLocation",
+               "s3:GetObject",
+               "s3:ListBucket" 
+            ],
+            "Resource":[
+               "arn:aws:s3:::disk-image-file-bucket",
+               "arn:aws:s3:::disk-image-file-bucket/*"
+            ]
+         },
+         {
+            "Effect":"Allow",
+            "Action":[
+               "s3:GetBucketLocation",
+               "s3:GetObject",
+               "s3:ListBucket",
+               "s3:PutObject",
+               "s3:GetBucketAcl"
+            ],
+            "Resource":[
+               "arn:aws:s3:::export-bucket",
+               "arn:aws:s3:::export-bucket/*"
+            ]
+         },
+         {
+            "Effect":"Allow",
+            "Action":[
+               "ec2:ModifySnapshotAttribute",
+               "ec2:CopySnapshot",
+               "ec2:RegisterImage",
+               "ec2:Describe*"
+            ],
+            "Resource":"*"
+         }
+      ]
+   }
+   ```
+
+1. Use the following [put\-role\-policy](https://docs.aws.amazon.com/cli/latest/reference/iam/put-role-policy.html) command to attach the policy to the role created above\. Ensure that you specify the full path to the location of the `role-policy.json` file\.
+
+   ```
+   aws iam put-role-policy --role-name vmimport --policy-name vmimport --policy-document "file://C:\import\role-policy.json"
+   ```
+
+## Required Configuration for VM Export<a name="prepare-vm-image"></a>
 
 Use the following guidelines to configure your VM before exporting it from the virtualization environment\.
 

@@ -31,7 +31,7 @@ The following diagram shows the process of exporting a VM from your virtualizati
 
 ## Instance Import<a name="instance-import"></a>
 
-First, prepare your virtual machine for export, and then export it using one of the supported formats\. Next, upload the VM image to Amazon S3, and then start the instance import task\. After the import task is complete, you can create an AMI from the stopped  instance\. If you want, you can copy the AMI to other Regions so that you can launch instances in those Regions\. You can also export a previously imported instance to your virtualization environment\.
+First, prepare your virtual machine for export, and then export it using one of the supported formats\. Next, upload the VM image to Amazon S3, and then start the instance import task\. After the import task is complete, you can create an AMI from the stopped instance\. If you want, you can copy the AMI to other Regions so that you can launch instances in those Regions\. You can also export a previously imported instance to your virtualization environment\.
 
 The following diagram shows the process of exporting a VM from your virtualization environment to Amazon EC2 as an instance\.
 
