@@ -2,16 +2,23 @@
 
 Before attempting to import a VM, take action as needed to meet the following requirements\. You may also need to prepare your AWS environment by creating a service account with appropriate permissions, and you must prepare your locally hosted VM so that it will be accessible once it is imported into AWS\.
 
-**Note**  
+**Important**  
 For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
 
-**Topics**
+**Contents**
 + [System Requirements](#prerequisites)
+  + [Operating Systems](#vmimport-operating-systems)
+  + [Image Formats](#vmimport-image-formats)
+  + [Instance Types](#vmimport-instance-types)
+  + [Volume Types and File Systems](#vmimport-volume-types)
 + [Licensing Options](#licensing)
+  + [Licensing for Linux](#linux)
+  + [Licensing for Windows](#windows)
 + [Limitations](#limitations-image)
 + [Required Permissions for IAM Users](#iam-permissions-image)
 + [Required Service Role](#vmimport-role)
 + [Required Configuration for VM Export](#prepare-vm-image)
++ [Programmatic Modifications to VMs](#import-modify-vm)
 
 ## System Requirements<a name="prerequisites"></a>
 
@@ -19,7 +26,7 @@ Before you begin, you must be aware of the operating systems and image formats t
 
 ### Operating Systems<a name="vmimport-operating-systems"></a>
 
-The following operating systems can be imported to and exported from Amazon EC2\.
+The following operating systems can be imported to and exported from Amazon EC2\. For more information about whether a Region is enabled by default, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\.
 
 **Windows \(Regions enabled by default\)**
 + Microsoft Windows Server 2003 \(Standard, Datacenter, Enterprise\) with Service Pack 1 \(SP1\) or later \(32\- and 64\-bit\)
@@ -67,6 +74,7 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + Oracle Linux 6\.1\-6\.10 using RHEL\-compatible kernel 2\.6\.32 or UEK kernels 3\.8\.13, 4\.1\.12
 + Oracle Linux 7\.0\-7\.6 using RHEL compatible kernel 3\.10\.0 or UEK kernels 3\.8\.13, 4\.1\.12, 4\.14\.35
 + Fedora Server 19\-21
++ Amazon Linux 2
 
 ### Image Formats<a name="vmimport-image-formats"></a>
 
@@ -94,7 +102,7 @@ VM Import/Export supports importing Windows and Linux instances with the followi
 MBR\-partitioned volumes and GUID Partition Table \(GPT\) partitioned volumes that are formatted using the NTFS file system\. For GPT\-partitioned volumes, only VHDX is supported as an image format\.
 
 **Linux/Unix**  
-MBR\-partitioned volumes that are formatted using the ext2, ext3, ext4, Btrfs, JFS, or XFS file system\. GUID Partition Table \(GPT\) partitioned volumes are not supported\.
+MBR\-partitioned volumes that are formatted using the ext2, ext3, ext4, Btrfs, JFS, or XFS file system\. Btrfs subvolumes are not supported\. GUID Partition Table \(GPT\) partitioned volumes are not supported\.
 
 ## Licensing Options<a name="licensing"></a>
 
@@ -140,14 +148,11 @@ The following rules apply when you use your BYOL Microsoft license, either throu
 + AWS recommends that you consult with your own legal and other advisers to understand and comply with the applicable Microsoft licensing requirements\. Usage of the Services \(including usage of the **licenseType** parameter and **BYOL** flag\) in violation of your agreements with Microsoft is not authorized or permitted\.
 
 ## Limitations<a name="limitations-image"></a>
-
-Importing AMIs and snapshots is subject to the following limitations:
 + UEFI/EFI boot partitions are supported only for Windows boot volumes with VHDX as the image format\. Otherwise, a VM's boot volume must use Master Boot Record \(MBR\) partitions\. In either case, boot volume cannot exceed 2 TiB \(uncompressed\) due to MBR limitations\. Additional non\-bootable volumes may use GUID Partition Table \(GPT\) partitioning but cannot be bigger than 16 TiB\. If you are use VMIE APIs \(instead of AWS Server Migration Service\), you will have to construct a manifest file for disks larger than 4TiB\. For more information, see [VM Import Manifest](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/manifest.html)\.
 **Note**  
 When AWS detects a Windows GPT boot volume with an UEFI boot partition, it converts it on\-the\-fly to an MBR boot volume with a BIOS boot partition\. This is because EC2 does not directly support GPT boot volumes on Windows instances\.
 + An imported VM may fail to boot if the root partition is not on the same virtual hard drive as the MBR\.
-+ A VM import task will fail for VMs with more than 22 volumes attached\. Additional disks can be individually imported using the `ImportSnapshot` API\.
-+ AMIs with volumes using EBS encryption are not supported\.
++ A VM import task will fail for VMs with more than 21 volumes attached\. Additional disks can be individually imported using the `ImportSnapshot` API\.
 + Importing VMs with dual\-boot configurations is not supported\.
 +  VM Import/Export does not support VMs that use Raw Device Mapping \(RDM\)\. Only VMDK disk images are supported\.
 + Imported Linux VMs must use 64\-bit images\. Migrating 32\-bit Linux images is not supported\.
@@ -194,14 +199,6 @@ If you're logged in as an AWS Identity and Access Management \(IAM\) user, you'l
     {
       "Effect": "Allow",
       "Action": [
-        "iam:CreateRole",
-        "iam:PutRolePolicy"
-      ],
-      "Resource": "*"
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
         "ec2:CancelConversionTask",
         "ec2:CancelExportTask",
         "ec2:CreateImage",
@@ -210,10 +207,12 @@ If you're logged in as an AWS Identity and Access Management \(IAM\) user, you'l
         "ec2:DeleteTags",
         "ec2:DescribeConversionTasks",
         "ec2:DescribeExportTasks",
+        "ec2:DescribeExportImageTasks",
         "ec2:DescribeInstanceAttribute",
         "ec2:DescribeInstanceStatus",
         "ec2:DescribeInstances",
         "ec2:DescribeTags",
+        "ec2:ExportImage",
         "ec2:ImportInstance",
         "ec2:ImportVolume",
         "ec2:StartInstances",
@@ -311,6 +310,20 @@ For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/Use
    }
    ```
 
+1. \(Optional\) If you intend to attach license configurations to an AMI, add the following License Manager permissions to the `role-policy.json` file\.
+
+   ```
+   {
+     "Effect":"Allow",
+     "Action":[
+       "license-manager:GetLicenseConfiguration",
+       "license-manager:UpdateLicenseSpecificationsForResource",
+       "license-manager:ListLicenseSpecificationsForResource"
+     ],
+     "Resource":"*"
+   }
+   ```
+
 1. Use the following [put\-role\-policy](https://docs.aws.amazon.com/cli/latest/reference/iam/put-role-policy.html) command to attach the policy to the role created above\. Ensure that you specify the full path to the location of the `role-policy.json` file\.
 
    ```
@@ -333,10 +346,8 @@ Use the following guidelines to configure your VM before exporting it from the v
 + Enable Remote Desktop \(RDP\) for remote access\.
 + Make sure that your host firewall \(Windows firewall or similar\), if configured, allows access to RDP\. Otherwise, you will not be able to access your instance after the import is complete\.
 + Make sure that the administrator account and all other user accounts use secure passwords\. All accounts must have passwords or the importation might fail\.
-+ Install the appropriate version of \.NET Framework on the VM\. Note that \.NET Framework 4\.5 or later will be installed automatically on your VM if required\.  
-****    
-[\[See the AWS documentation website for more details\]](http://docs.aws.amazon.com/vm-import/latest/userguide/vmie_prereqs.html)
-+ You can run System Preparation \(Sysprep\) on your Windows Server 2008 or Windows Server 2012 VM images before or after they are imported\. If you run Sysprep before importing your VM, the importation process adds an answer file \(`unattend.xml`\) to the VM that automatically accepts the End User License Agreement \(EULA\) and sets the locale to EN\-US\. If you choose to run Sysprep after importation, we recommend that you use the Amazon EC2 Config service to run Sysprep\.
++ Install \.NET Framework 4\.5 or later on the VM\. We will install the \.NET framework on your VM as needed\.
++ You can run System Preparation \(Sysprep\) on your Windows Server VM images before or after they are imported\. If you run Sysprep before importing your VM, the importation process adds an answer file \(`unattend.xml`\) to the VM that automatically accepts the End User License Agreement \(EULA\) and sets the locale to EN\-US\. If you choose to run Sysprep after importation, we recommend that you use E2Launch \(Windows Server 2016 and later\) or EC2Config \(through Windows Server 2012 R2\) to run Sysprep\.
 
 **To include your own answer file instead of the default \(unattend\.xml\)**
 
@@ -363,18 +374,16 @@ Use the following guidelines to configure your VM before exporting it from the v
      </unattend>
      ```
 
-  1. Save the file in the **C:\\Windows\\Panther** directory with the name `unattend.xml`\.
+  1. Save the file in the `C:\Windows\Panther` directory with the name `unattend.xml`\.
 
-  1. Run Sysprep with the **/oobe** and **/generalize** options\.
-**Note**  
-These options strip all unique system information from the Microsoft Windows installation and prompt you to reset the administrator password\.
+  1. Run Sysprep with the /oobe and /generalize options\. These options strip all unique system information from the Windows installation and prompt you to reset theadministrator password\.
 
   1. Shut down the VM and export it from your virtualization environment\.
 + Disable Autologon on your Windows VM\.
 + Open **Control Panel** > **System and Security** > **Windows Update**\. In the left pane, choose **Change settings**\. Choose the desired setting\. Be aware that if you choose **Download updates but let me choose whether to install them** \(the default value\) the update check can temporarily consume between 50% and 99% of CPU resources on the instance\. The check usually occurs several minutes after the instance starts\. Make sure that there are no pending Microsoft updates, and that the computer is not set to install software when it reboots\.
-+ Apply the following hotfixes:
-  + [You cannot change system time if RealTimeIsUniversal registry entry is enabled in Windows](http://support.microsoft.com/kb/2922223)
-  + [High CPU usage during DST changeover in Windows Server 2008, Windows 7, or Windows Server 2008 R2](http://support.microsoft.com/kb/2800213)
++ Apply the following hotfixes as needed:
+  + [You cannot change system time if RealTimeIsUniversal registry entry is enabled in Windows](https://support.microsoft.com/en-us/help/2922223/you-cannot-change-system-time-if-realtimeisuniversal-registry-entry-is)
+  + [High CPU usage during DST changeover in Windows Server 2008, Windows 7, or Windows Server 2008 R2](https://support.microsoft.com/en-us/help/2800213/high-cpu-usage-during-dst-changeover-in-windows-server-2008-windows-7)
 + Set the RealTimeIsUniversal registry key\. For more information, see [Setting the Time](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/windows-set-time.html) in the *Amazon EC2 User Guide for Windows Instances*\.
 
 **Linux**
@@ -384,7 +393,8 @@ These options strip all unique system information from the Microsoft Windows ins
 + Make sure that your Linux VM uses GRUB \(GRUB legacy\) or GRUB 2 as its bootloader\.
 + Make sure that your Linux VM uses one of the following for the root file system: EXT2, EXT3, EXT4, Btrfs, JFS, or XFS\.
 
-**Programmatic Modifications to VMs**  
+## Programmatic Modifications to VMs<a name="import-modify-vm"></a>
+
 When importing a VM, AWS modifies the file system to make the imported VM accessible to the customer\. The following actions may occur:
 + \[Linux\] Installing Citrix PV drivers either directly in OS or modify initrd/initramfs to contain them\.
 + \[Linux\] Modifying network scripts to replace static IPs with dynamic IPs\.

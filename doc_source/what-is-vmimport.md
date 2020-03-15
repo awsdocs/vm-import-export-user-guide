@@ -4,7 +4,7 @@ VM Import/Export enables you to import virtual machine \(VM\) images from your e
 
 For more information, see [VM Import/Export](https://aws.amazon.com/ec2/vm-import/)\.
 
-**Note**  
+**Important**  
 For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
 
 ## Features of VM Import/Export<a name="vmimport-features"></a>
@@ -21,7 +21,7 @@ VM Import provides the following features:
 First, you must decide whether you will import your VMs as AMIs or instances\. To get started, read about how image import and instance import work\. You can also read through the prerequisites and limitations of each method\. For more information, see:
 + [How VM Import/Export Works](how-vm-import-export-works.md)
 + [Importing a VM as an Image Using VM Import/Export](vmimport-image-import.md)
-+ [Importing a VM as an Instance Using VM Import/Export](vmimport-instance-import.md)
++ [Importing a Disk as a Snapshot Using VM Import/Export](vmimport-import-snapshot.md)
 
 ## Accessing VM Import/Export<a name="vmimport-interface"></a>
 

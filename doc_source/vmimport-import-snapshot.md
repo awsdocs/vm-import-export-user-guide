@@ -2,10 +2,12 @@
 
 VM Import/Export enables you to import your disks as Amazon EBS snapshots\. After the snapshot is created, you can create an EBS volume from the snapshot, and then attach the volume to an EC2 instance\.
 
+An imported snapshot has an arbitrary volume ID that should not be used for any purpose\.
+
 ## Prerequisites<a name="import-snapshot-prerequisites"></a>
 + The following disk formats are supported: Virtual Hard Disk \(VHD/VHDX\), ESX Virtual Machine Disk \(VMDK\), and raw\.
 + You must first upload your disks to Amazon S3\.
-+ If you have not already installed the AWS CLI, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
++ If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
 ## Start an Import Snapshot Task<a name="start-import-task"></a>
 

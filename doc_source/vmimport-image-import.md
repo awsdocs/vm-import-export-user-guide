@@ -2,7 +2,7 @@
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as Amazon Machine Images \(AMI\), which you can use to launch instances\. Subsequently, you can export the VM images from an instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
-**Note**  
+**Important**  
 For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
 
 **Topics**
@@ -32,17 +32,17 @@ After exporting your VM from your virtualization environment, you can import it 
 + [Import the VM](#import-vm)
 
 ### Prerequisites<a name="import-image-prereqs"></a>
-+ Install the AWS CLI on the image\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 + Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to import your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
 + Create an IAM role named `vmimport`\. For more information, see [Required Service Role](vmie_prereqs.md#vmimport-role)\.
++ If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
 ### Upload the Image to Amazon S3<a name="upload-image"></a>
 
-Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice\. For information about uploading files through the S3 console, see [Uploading Objects into Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/UploadingObjectsintoAmazonS3.html)\. For information about the Enhanced Uploader Java applet, see [Using the Enhanced Uploader](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/enhanced-uploader.html)\.
+Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice\. For information about uploading objects through the Amazon S3 console, see [Uploading Objects](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/upload-objects.html)\.
 
 ### Import the VM<a name="import-vm"></a>
 
-After you upload your VM image file to Amazon S3, you can use the AWS CLI to import the image\. These tools accept either the Amazon S3 bucket and path to the file or a URL for a public Amazon S3 file\. Private Amazon S3 files require a [signed GET URL]( https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html)\.
+After you upload your VM image file to Amazon S3, you can use the AWS CLI to import the image\. These tools accept either the Amazon S3 bucket and path to the file or a URL for a public Amazon S3 file\. Private Amazon S3 files require a [presigned URL]( https://docs.aws.amazon.com/AmazonS3/latest/dev/ShareObjectPreSignedURL.html)\.
 
 The following examples use the AWS CLI command [import\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html) to create import tasks\.
 

@@ -14,7 +14,7 @@ When you export an image, you are charged the standard Amazon S3 rates for the b
 ## Prerequisites<a name="vmexport-prerequisites"></a>
 
 To export a VM from Amazon EC2, first meet the following prerequisites\.
-+ Install the AWS CLI on the image\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
++ Install the AWS CLI on the instance\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 + Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to export your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
 + Create an IAM role named `vmimport`\. For more information, see [Required Service Role](vmie_prereqs.md#vmimport-role)\.
 
@@ -25,11 +25,13 @@ Exporting images and volumes is subject to the following limitations:
 + You must export your instances and volumes to one of the following image formats that your virtualization environment supports:
   + Virtual Hard Disk \(VHD\), which is compatible with Citrix Xen and Microsoft Hyper\-V virtualization products\.
   + Stream\-optimized ESX Virtual Machine Disk \(VMDK\), which is compatible with VMware ESX and VMware vSphere versions 4, 5, and 6\.
+  + Raw format\.
 
   To convert exported VMDK files to OVF, use the [VMware OVF Tool](https://www.vmware.com/support/developer/ovf/)\.
 + You can't export Amazon EBS data volumes\.
 + You can't export an image from Amazon EC2 if you've shared it from another AWS account\.
-+ You can't have more than five export tasks per Region in progress at the same time\.
++ You cannot have multiple export image tasks in progress for the same AMI at the same time\.
++ You can't have more than 20 conversion tasks per Region in progress at the same time\.
 + VMs with volumes larger than 1 TiB are not supported\.
 + You can export a volume to either an unencrypted Amazon S3 bucket or to a bucket encrypted using AWS\-256 encryption\. You cannot export to an S3 bucket encrypted using AWS\-KMS encryption\.
 
@@ -49,7 +51,7 @@ To monitor the export of your image, use the following [describe\-export\-image\
 aws ec2 describe-export-image-tasks --export-image-task-ids export-ami-1234567890abcdef0
 ```
 
-The following is an example response\. The status shown is `active`, which means that the import is in progress\. The image is ready to use when the status is `completed`\.
+The following is an example response\. The status shown is `active`, which means that the export task is in progress\. The image is ready to use when the status is `completed`\.
 
 ```
 {
