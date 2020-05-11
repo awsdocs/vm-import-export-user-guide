@@ -271,42 +271,58 @@ For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/Use
       "Version":"2012-10-17",
       "Statement":[
          {
-            "Effect":"Allow",
-            "Action":[
+            "Effect": "Allow",
+            "Action": [
                "s3:GetBucketLocation",
                "s3:GetObject",
                "s3:ListBucket" 
             ],
-            "Resource":[
+            "Resource": [
                "arn:aws:s3:::disk-image-file-bucket",
                "arn:aws:s3:::disk-image-file-bucket/*"
             ]
          },
          {
-            "Effect":"Allow",
-            "Action":[
+            "Effect": "Allow",
+            "Action": [
                "s3:GetBucketLocation",
                "s3:GetObject",
                "s3:ListBucket",
                "s3:PutObject",
                "s3:GetBucketAcl"
             ],
-            "Resource":[
+            "Resource": [
                "arn:aws:s3:::export-bucket",
                "arn:aws:s3:::export-bucket/*"
             ]
          },
          {
-            "Effect":"Allow",
-            "Action":[
+            "Effect": "Allow",
+            "Action": [
                "ec2:ModifySnapshotAttribute",
                "ec2:CopySnapshot",
                "ec2:RegisterImage",
                "ec2:Describe*"
             ],
-            "Resource":"*"
+            "Resource": "*"
          }
       ]
+   }
+   ```
+
+1. \(Optional\) If you need to import resources encrypted using customer master keys \(CMK\) from AWS Key Management Service \(AWS KMS\), add the following permissions to the `role-policy.json` file\.
+
+   ```
+   {
+     "Effect": "Allow",
+     "Action": [
+       "kms:Decrypt",
+       "kms:DescribeKey",
+       "kms:Encrypt",
+       "kms:GenerateDataKey*",
+       "kms:ReEncrypt*"
+     ],
+     "Resource": "*"
    }
    ```
 
@@ -314,13 +330,13 @@ For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/Use
 
    ```
    {
-     "Effect":"Allow",
-     "Action":[
+     "Effect": "Allow",
+     "Action": [
        "license-manager:GetLicenseConfiguration",
        "license-manager:UpdateLicenseSpecificationsForResource",
        "license-manager:ListLicenseSpecificationsForResource"
      ],
-     "Resource":"*"
+     "Resource": "*"
    }
    ```
 

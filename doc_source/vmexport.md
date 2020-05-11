@@ -1,6 +1,6 @@
 # Exporting an Instance as a VM Using VM Import/Export<a name="vmexport"></a>
 
-Exporting a VM is useful when you want to deploy a copy of an Amazon EC2 instance in your on\-site virtualization environment\. You can export most EC2 instances to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\.
+Exporting as a VM is useful when you want to deploy a copy of an Amazon EC2 instance in your on\-site virtualization environment\. You can export most EC2 instances to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\.
 
 **Note**  
 If you're using VMware vSphere, you can alternatively use the AWS Connector for vCenter to export a VM from Amazon EC2\. For more information, see [Exporting a Migrated Amazon EC2 Instance](https://docs.aws.amazon.com/amp/latest/userguide/migrate-vms.html#export-instance) in the *AWS Management Portal for vCenter User Guide*\.
@@ -17,16 +17,20 @@ When you export an instance, you are charged the standard Amazon S3 rates for th
 ## Prerequisites<a name="vmexport-prerequisites"></a>
 
 To export a VM from Amazon EC2, first meet the following prerequisites\.
-+ Install the AWS CLI on the instance\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
-+ Create an Amazon S3 bucket for storing the exported instances or choose an existing bucket\. For more information, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
++ Install the AWS CLI\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
++ Create an Amazon S3 bucket for storing the exported instances or choose an existing bucket\. The bucket must be in the Region where you want export your VMs\. For more information, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
 + Attach an access control list \(ACL\) to your S3 bucket containing the following grants\. For more information, see [Managing Access with ACLs](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html) in the *Amazon Simple Storage Service Developer Guide*\.
   + 
 
     For `Grantee`, provide the appropriate Region\-specific canonical account ID:  
-**Middle East \(Bahrain\)**  
-`aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f`  
+**Africa \(Cape Town\)**  
+`3f7744aeebaf91dd60ab135eb1cf908700c8d2bc9133e61261e6c582be6e33ee`  
 **Asia Pacific \(Hong Kong\)**  
 `97ee7ab57cc9b5034f31e107741a968e595c0d7a19ec23330eae8d045a46edfb`  
+**Europe \(Milan\)**  
+`04636d9a349e458b0c1cbf1421858b9788b4ec28b066148d4907bb15c52b5b9c`  
+**Middle East \(Bahrain\)**  
+`aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f`  
 **China \(Beijing\)**  
 `834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f`  
 **AWS GovCloud \(US\-West\)**  
@@ -39,12 +43,14 @@ To export a VM from Amazon EC2, first meet the following prerequisites\.
 ## Considerations for Instance Export<a name="vmexport-limits"></a>
 
 Exporting instances and volumes is subject to the following limitations:
-+ You cannot export a VM if it contains third\-party software provided by AWS\. For example, VM Export cannot export Windows or SQL Server instances, or any instance created from an image in the AWS Marketplace\.
 + You must export your instances and volumes to one of the following image formats that your virtualization environment supports:
   + Open Virtual Appliance \(OVA\), which is compatible with VMware vSphere versions 4, 5, and 6\.
   + Virtual Hard Disk \(VHD\), which is compatible with Citrix Xen and Microsoft Hyper\-V virtualization products\.
   + Stream\-optimized ESX Virtual Machine Disk \(VMDK\), which is compatible with VMware ESX and VMware vSphere versions 4, 5, and 6\.
-+ You can't export Amazon EBS data volumes\.
++ You can't export an instance if it contains third\-party software provided by AWS\. For example, VM Export cannot export Windows or SQL Server instances, or any instance created from an image in the AWS Marketplace\.
++ You can't export an instance with encrypted EBS snapshots in the block device mapping\.
++ You can't export an instance with instance store volumes in the block device mapping\.
++ You can only export EBS volumes that are specified in the block device mapping, not EBS volumes attached after instance launch\.
 + You can't export an instance that has more than one virtual disk\.
 + You can't export an instance that has more than one network interface\.
 + You can't export an instance from Amazon EC2 if you've shared it from another AWS account\.

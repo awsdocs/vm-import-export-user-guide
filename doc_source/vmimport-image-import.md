@@ -48,6 +48,8 @@ The following examples use the AWS CLI command [import\-image](https://docs.aws.
 
 **Example 1: Import an OVA**
 
+Use the following command to import an image with a single disk\.
+
 ```
 aws ec2 import-image --description "My server VM" --disk-containers "file://C:\import\containers.json"
 ```
@@ -67,6 +69,8 @@ The following is an example `containers.json` file\.
 ```
 
 **Example 2: Import Multiple Disks**
+
+Use the following command to import an image with multiple disks\.
 
 ```
 $ C:\> aws ec2 import-image --description "My server disks" --disk-containers "file://C:\import\containers.json"
@@ -96,6 +100,8 @@ The following is an example `containers.json` file\.
 ```
 
 **Example 3: Import Disk with Encrypted Option Enabled**
+
+Use the following command to import an image with an encrypted root volume\.
 
 ```
 aws ec2 import-image --description "My server disks" --encrypted --kms-key-id 0ea3fef3-80a7-4778-9d8c-1c0c6EXAMPLE --disk-containers "file://C:\import\containers.json"

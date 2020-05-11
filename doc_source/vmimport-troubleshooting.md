@@ -99,7 +99,7 @@ This inability of the virtual disk image to boot up and establish network connec
 
 **TCP/IP networking and DHCP are not enabled**  
 **Cause**: TCP/IP networking and DHCP must be enabled\.  
-**Resolution**: Ensure that TCP/IP networking is enabled\. For more information, see [Configure TCP/IP settings \(Windows Server 2008\)](http://technet.microsoft.com/en-us/library/cc731673%28v=ws.10%29.aspx) at the Microsoft TechNet website\. Ensure that DHCP is enabled\. For more information, see [What is DHCP](http://technet.microsoft.com/en-us/library/cc781008%28v=ws.10%29.aspx) at the Microsoft TechNet web site\.
+**Resolution**: Ensure that TCP/IP networking is enabled\. For more information, see [Change TCP/IP settings](https://support.microsoft.com/en-us/help/15089/windows-change-tcp-ip-settings) at the Microsoft Support website\. Ensure that DHCP is enabled\. For more information, see [Dynamic Host Configuration Protocol \(DHCP\)](https://docs.microsoft.com/en-us/windows-server/networking/technologies/dhcp/dhcp-top) at the Microsoft website\.
 
 **A volume that Windows requires is missing from the virtual machine**  
 **Cause**: Importing a VM into Amazon EC2 only imports the boot disk, all other disks must be detached and Windows must able to boot before importing the virtual machine\. For example, Active Directory often stores the Active Directory database on the `D:\` drive\. A domain controller cannot boot if the Active Directory database is missing or inaccessible\.  
