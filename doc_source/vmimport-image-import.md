@@ -2,9 +2,6 @@
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as Amazon Machine Images \(AMI\), which you can use to launch instances\. Subsequently, you can export the VM images from an instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
-**Important**  
-For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
-
 **Topics**
 + [Export Your VM from its Virtualization Environment](#export-vm-image)
 + [Import Your VM as an Image](#import-vm-image)
@@ -127,6 +124,32 @@ Status values include the following:
 + `converting` — The imported image is being converted into an AMI\.
 + `completed` — The import task is completed and the AMI is ready to use\.
 
+After the import image task is completed, the output includes the ID of the AMI\. The following is example output that includes `ImageId`\.
+
+```
+{
+    "ImportImageTasks": [
+        {
+            "ImportTaskId": "import-ami-01234567890abcdef",
+            "ImageId": "ami-1234567890EXAMPLE",
+            "SnapshotDetails": [
+                {
+                    "DiskImageSize": 705638400.0,
+                    "Format": "ova",
+                    "SnapshotId": "snap-111222333444aaabb"
+                    "Status": "completed",
+                    "UserBucket": {
+                        "S3Bucket": "my-import-bucket",
+                        "S3Key": "vms/my-server-vm.ova"
+                    }
+                }
+            ],
+            "Status": "completed"
+        }
+    ]
+}
+```
+
 ## Cancel an Import Image Task<a name="cancel-upload"></a>
 
 If you need to cancel an active import task, use the [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command\.
@@ -136,6 +159,16 @@ aws ec2 cancel-import-task --import-task-id import-ami-1234567890abcdef0
 ```
 
 ## Next Steps<a name="next-steps"></a>
+
+After the import image task is complete, you can launch an instance using the resulting AMI or copy the AMI to another Region\.
+
+**Windows**
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
+
+**Linux**
++ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
++ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
 
 For some operating systems, the device drivers for enhanced networking and NVMe block devices that are required by [Nitro\-based instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html#ec2-nitro-instances) are not installed automatically during import\. To install these drivers manually, use the directions in the following documentation\. Next, create a new AMI from the customized instance\.
 
@@ -147,13 +180,3 @@ For some operating systems, the device drivers for enhanced networking and NVMe 
 **Linux**
 + [Enabling Enhanced Networking on Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/enhanced-networking-ena.html)
 + [Install or Upgrade the NVMe Driver](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nvme-ebs-volumes.html#install-nvme-driver)
-
-After you have an AMI with the required drivers, you can launch it as an instance or copy it to another Region\. For more information, see the following documentation\.
-
-**Windows**
-+ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/launching-instance.html)
-+ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/CopyingAMIs.html)
-
-**Linux**
-+ [Launching an Instance](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/launching-instance.html)
-+ [Copying an AMI](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)

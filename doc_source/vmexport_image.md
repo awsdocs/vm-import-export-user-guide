@@ -29,7 +29,6 @@ Exporting images and volumes is subject to the following limitations:
   To convert exported VMDK files to OVF, use the [VMware OVF Tool](https://www.vmware.com/support/developer/ovf/)\.
 + You can't export an image if it contains third\-party software provided by AWS\. For example, VM Export cannot export Windows or SQL Server images, or any image created from an image in the AWS Marketplace\.
 + You can't export an image with encrypted EBS snapshots in the block device mapping\.
-+ You can't export an image with instance store volumes in the block device mapping\.
 + You can only export EBS data volumes that are specified in the block device mapping, not EBS volumes attached after instance launch\.
 + You can't export an image from Amazon EC2 if you've shared it from another AWS account\.
 + You can't have multiple export image tasks in progress for the same AMI at the same time\.

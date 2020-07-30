@@ -2,14 +2,10 @@
 
 Before attempting to import a VM, take action as needed to meet the following requirements\. You may also need to prepare your AWS environment by creating a service account with appropriate permissions, and you must prepare your locally hosted VM so that it will be accessible once it is imported into AWS\.
 
-**Important**  
-For most VM import needs, we recommend that you use the AWS Server Migration Service\. AWS SMS automates the import process \(reducing the workload of migrating large VM infrastructures\), adds support for incremental updates of changing VMs, and converts your imported VMs into ready\-to\-use Amazon machine images \(AMIs\)\. To get started with AWS SMS, see [AWS Server Migration Service](https://aws.amazon.com/server-migration-service)\.
-
 **Contents**
 + [System Requirements](#prerequisites)
-  + [Operating Systems](#vmimport-operating-systems)
   + [Image Formats](#vmimport-image-formats)
-  + [Instance Types](#vmimport-instance-types)
+  + [Operating Systems](#vmimport-operating-systems)
   + [Volume Types and File Systems](#vmimport-volume-types)
 + [Licensing Options](#licensing)
   + [Licensing for Linux](#linux)
@@ -24,9 +20,17 @@ For most VM import needs, we recommend that you use the AWS Server Migration Ser
 
 Before you begin, you must be aware of the operating systems and image formats that VM Import/Export supports, and understand the limitations on importing instances and volumes\.
 
+### Image Formats<a name="vmimport-image-formats"></a>
+
+VM Import/Export supports the following image formats for importing both disks and VMs:
++ Open Virtual Appliance \(OVA\) image format, which supports importing images with multiple hard disks\.
++ Stream\-optimized ESX Virtual Machine Disk \(VMDK\) image format, which is compatible with VMware ESX and VMware vSphere virtualization products\. Note that you can only import VMDK files into Amazon EC2 that were created through the OVF export process in VMware\.
++ Fixed and Dynamic Virtual Hard Disk \(VHD/VHDX\) image formats, which are compatible with Microsoft Hyper\-V, Microsoft Azure, and Citrix Xen virtualization products\.
++ Raw format for importing disks and VMs\.
+
 ### Operating Systems<a name="vmimport-operating-systems"></a>
 
-The following operating systems can be imported to and exported from Amazon EC2\. For more information about whether a Region is enabled by default, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\.
+The following operating systems can be imported to and exported from Amazon EC2\. For more information about whether a Region is enabled by default, see [Available Regions](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions) in the *Amazon EC2 User Guide for Linux Instances*\.<a name="windows-operating-systems"></a>
 
 **Windows \(Regions enabled by default\)**
 + Microsoft Windows Server 2003 \(Standard, Datacenter, Enterprise\) with Service Pack 1 \(SP1\) or later \(32\- and 64\-bit\)
@@ -55,11 +59,17 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + Microsoft Windows 7 \(Home, Professional, Enterprise, Ultimate\) \(US English\)
 + Microsoft Windows 8 \(Home, Professional, Enterprise\) \(US English\)
 + Microsoft Windows 8\.1 \(Professional, Enterprise\) \(US English\)
-+ Microsoft Windows 10 \(Home, Professional, Enterprise, Education\) \(US English\)
++ Microsoft Windows 10 \(Home, Professional, Enterprise, Education\) \(US English\)<a name="linux-operating-systems"></a>
 
 **Linux/Unix \(64\-bit only\)**
-+ Ubuntu 12\.04, 12\.10, 13\.04, 13\.10, 14\.04, 14\.10, 15\.04, 16\.04, 16\.10, 17\.04, 18\.04
-+ Red Hat Enterprise Linux \(RHEL\) 5\.1\-5\.11, 6\.1\-6\.9, 7\.0\-7\.6 \(6\.0 lacks required drivers\)
++ Amazon Linux 2
++ CentOS 5\.1\-5\.11, 6\.1\-6\.8, 7\.0\-7\.6, 8\.0\-8\.2
++ Debian 6\.0\.0\-6\.0\.8, 7\.0\.0\-7\.8\.0, 8\.0\.0
++ Fedora Server 19\-21
++ Oracle Linux 5\.10\-5\.11 with el5uek kernel suffix
++ Oracle Linux 6\.1\-6\.10 using RHEL\-compatible kernel 2\.6\.32 or UEK kernels 3\.8\.13, 4\.1\.12
++ Oracle Linux 7\.0\-7\.6 using RHEL compatible kernel 3\.10\.0 or UEK kernels 3\.8\.13, 4\.1\.12, 4\.14\.35
++ Red Hat Enterprise Linux \(RHEL\) 5\.1\-5\.11, 6\.1\-6\.9, 7\.0\-7\.6, 8\.0\-8\.2
 + SUSE Linux Enterprise Server 11 with Service Pack 1 and kernel 2\.6\.32\.12\-0\.7
 + SUSE Linux Enterprise Server 11 with Service Pack 2 and kernel 3\.0\.13\-0\.27
 + SUSE Linux Enterprise Server 11 with Service Pack 3 and kernel 3\.0\.76\-0\.11, 3\.0\.101\-0\.8, or 3\.0\.101\-0\.15
@@ -68,31 +78,7 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + SUSE Linux Enterprise Server 12 with Service Pack 1 and kernel 3\.12\.49\-11
 + SUSE Linux Enterprise Server 12 with Service Pack 2 and kernel 4\.4
 + SUSE Linux Enterprise Server 12 with Service Pack 3 and kernel 4\.4
-+ CentOS 5\.1\-5\.11, 6\.1\-6\.8, 7\.0\-7\.6 \(6\.0 lacks required drivers\)
-+ Debian 6\.0\.0\-6\.0\.8, 7\.0\.0\-7\.8\.0, 8\.0\.0
-+ Oracle Linux 5\.10\-5\.11 with el5uek kernel suffix
-+ Oracle Linux 6\.1\-6\.10 using RHEL\-compatible kernel 2\.6\.32 or UEK kernels 3\.8\.13, 4\.1\.12
-+ Oracle Linux 7\.0\-7\.6 using RHEL compatible kernel 3\.10\.0 or UEK kernels 3\.8\.13, 4\.1\.12, 4\.14\.35
-+ Fedora Server 19\-21
-+ Amazon Linux 2
-
-### Image Formats<a name="vmimport-image-formats"></a>
-
-VM Import/Export supports the following image formats for importing both disks and VMs:
-+ Open Virtual Appliance \(OVA\) image format, which supports importing images with multiple hard disks\.
-+ Stream\-optimized ESX Virtual Machine Disk \(VMDK\) image format, which is compatible with VMware ESX and VMware vSphere virtualization products\. Note that you can only import VMDK files into Amazon EC2 that were created through the OVF export process in VMware\.
-+ Fixed and Dynamic Virtual Hard Disk \(VHD/VHDX\) image formats, which are compatible with Microsoft Hyper\-V, Microsoft Azure, and Citrix Xen virtualization products\.
-+ Raw format for importing disks and VMs\.
-
-### Instance Types<a name="vmimport-instance-types"></a>
-
-VM Import/Export supports importing Windows instances into most instance types\. For more information about using Windows and other Microsoft products within AWS, including "bring your own license" \(BYOL\), see [Amazon Web Services and Microsoft Frequently Asked Questions](https://aws.amazon.com/windows/faq/)\.
-
-Linux instances can be imported into the following instance types:
-+ General purpose: `t2.micro` \| `t2.small` \| `t2.medium` \| `m3.medium` \| `m3.large` \| `m3.xlarge` \| `m3.2xlarge`
-+ Compute optimized: `c3.large` \| `c3.xlarge` \| `c3.2xlarge` \| `c3.4xlarge` \| `c3.8xlarge` \| `cc1.4xlarge` \| `cc2.8xlarge`
-+ Memory optimized: `r3.large` \| `r3.xlarge` \| `r3.2xlarge` \| `r3.4xlarge` \| `r3.8xlarge` \| `cr1.8xlarge`
-+ Storage optimized: `i2.xlarge` \| `i2.2xlarge` \| `i2.4xlarge` \| `i2.8xlarge` \| `hi1.4xlarge` \| `hi1.8xlarge`
++ Ubuntu 12\.04, 12\.10, 13\.04, 13\.10, 14\.04, 14\.10, 15\.04, 16\.04, 16\.10, 17\.04, 18\.04
 
 ### Volume Types and File Systems<a name="vmimport-volume-types"></a>
 
@@ -208,9 +194,11 @@ If you're logged in as an AWS Identity and Access Management \(IAM\) user, you'l
         "ec2:DescribeConversionTasks",
         "ec2:DescribeExportTasks",
         "ec2:DescribeExportImageTasks",
+        "ec2:DescribeImages",
         "ec2:DescribeInstanceAttribute",
         "ec2:DescribeInstanceStatus",
         "ec2:DescribeInstances",
+        "ec2:DescribeSnapshots",
         "ec2:DescribeTags",
         "ec2:ExportImage",
         "ec2:ImportInstance",
@@ -232,9 +220,10 @@ If you're logged in as an AWS Identity and Access Management \(IAM\) user, you'l
 
 ## Required Service Role<a name="vmimport-role"></a>
 
- VM Import/Export requires a role to perform certain operations on your behalf\. You must create a service role named `vmimport` with a trust relationship policy document that allows VM Import/Export to assume the role, and you must attach an IAM policy to the role\.
+ VM Import/Export requires a role to perform certain operations on your behalf\. You must create a service role named `vmimport` with a trust relationship policy document that allows VM Import/Export to assume the role, and you must attach an IAM policy to the role\. For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html) in the *IAM User Guide*\.
 
-For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/UserGuide/roles-toplevel.html) in the *IAM User Guide*\.
+**Prerequisite**  
+You must enable AWS Security Token Service \(AWS STS\) in any Region where you plan to use VM Import/Export\. For more information, see [Activating and deactivating AWS STS in an AWS Region](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_temp_enable-regions.html#sts-regions-activate-deactivate)\.
 
 **To create the service role**
 
@@ -316,6 +305,7 @@ For more information, see [IAM Roles](https://docs.aws.amazon.com/IAM/latest/Use
    {
      "Effect": "Allow",
      "Action": [
+       "kms:CreateGrant",
        "kms:Decrypt",
        "kms:DescribeKey",
        "kms:Encrypt",

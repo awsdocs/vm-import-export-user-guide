@@ -51,6 +51,7 @@ Exporting instances and volumes is subject to the following limitations:
 + You can't export an instance with encrypted EBS snapshots in the block device mapping\.
 + You can't export an instance with instance store volumes in the block device mapping\.
 + You can only export EBS volumes that are specified in the block device mapping, not EBS volumes attached after instance launch\.
++ You can't export an instance launched from an imported image if you deleted the AMI or the EBS snapshot for the AMI\. To work around the issue, create an AMI from the instance and export the AMI\.
 + You can't export an instance that has more than one virtual disk\.
 + You can't export an instance that has more than one network interface\.
 + You can't export an instance from Amazon EC2 if you've shared it from another AWS account\.
