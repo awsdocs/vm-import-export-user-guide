@@ -1,4 +1,4 @@
-## Vm Import Export User Guide
+## VM Import/Export User Guide
 
 User guide for VM Import/Export
 
