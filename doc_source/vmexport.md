@@ -33,7 +33,7 @@ To export a VM from Amazon EC2, first meet the following prerequisites\.
 `aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f`  
 **China \(Beijing\)**  
 `834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f`  
-**AWS GovCloud \(US\-West\)**  
+**AWS GovCloud \(US\)**  
 `af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602`  
 **All other Regions**  
 `c4d8eabf8db69dbe46bfe0e517100c554f01200b104d59cd408e777ba442a322`
@@ -55,7 +55,7 @@ Exporting instances and volumes is subject to the following limitations:
 + You can't export an instance that has more than one virtual disk\.
 + You can't export an instance that has more than one network interface\.
 + You can't export an instance from Amazon EC2 if you've shared it from another AWS account\.
-+ You can't have more than 20 conversion tasks per Region in progress at the same time\.
++ By default, you can't have more than 5 conversion tasks per Region in progress at the same time\. This limit is adjustable up to 20\.
 + VMs with volumes larger than 1 TiB are not supported\.
 + You can export a volume to either an unencrypted S3 bucket or to a bucket encrypted using SSE\-S3\. You cannot export to an S3 bucket encrypted using SSE\-KMS\.
 
