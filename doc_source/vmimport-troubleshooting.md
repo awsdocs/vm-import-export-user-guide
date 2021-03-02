@@ -3,13 +3,13 @@
 When importing or exporting a virtual machine \(VM\), most errors occur because of an attempt to do something that isn't supported\. To avoid these errors, be sure to check the requirements and limitations carefully\.
 
 **Topics**
-+ [ImportImage Errors](#import-image-errors)
-+ [ImportInstance Errors](#import-instance-errors)
-+ [VM Export Errors](#instance-export-errors)
-+ [Windows VM Errors](#windows-vm-errors)
-+ [Linux VM Errors](#linux-vm-errors)
++ [Import image errors](#import-image-errors)
++ [Import instance errors](#import-instance-errors)
++ [VM export errors](#instance-export-errors)
++ [Windows VM errors](#windows-vm-errors)
++ [Linux VM errors](#linux-vm-errors)
 
-## ImportImage Errors<a name="import-image-errors"></a>
+## Import image errors<a name="import-image-errors"></a>
 
 **AWS Error Code: InvalidParameter, AWS Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
 The specified image format is not supported\. Retry the operation using one of the following supported image formats: VHD, VHDX, VMDK, or raw\.
@@ -37,7 +37,7 @@ This error can also occur if the user calling `ImportImage` has `Decrypt` permis
 }
 ```
 
-## ImportInstance Errors<a name="import-instance-errors"></a>
+## Import instance errors<a name="import-instance-errors"></a>
 
 **AWS Error Code: InvalidParameter, AWS Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
 The specified image format is not supported\. Retry the operation using one of the following supported image formats: OVA, VHD, VMDK, or raw\.
@@ -63,18 +63,18 @@ The command syntax or Amazon S3 bucket name is incorrect\. Create an Amazon S3 b
 **The given S3 bucket is not local to the Region**  
 The Amazon S3 Bucket used for VM Import must reside in the same AWS Region where you want to import the VM\.
 
-## VM Export Errors<a name="instance-export-errors"></a>
+## VM export errors<a name="instance-export-errors"></a>
 
 **Client\.UnsupportedOperation: This instance has multiple volumes attached\. Please remove additional volumes\.**  
 Detach volumes other than the root volume and try again\. If you need the data from the volumes, you can copy it to the root volume or import the volumes to Amazon EBS\.
 
-**Client\.NotExportable: Only imported instances can be exported\. \(Service: AmazonEC2; Status Code: 400; Error Code: NotExportable; Request ID: <RequestID>\)**  
-VM Export is supported only with instances that you previously imported to Amazon EC2 using VM Import\.
+**Client\.NotExportable: This instance cannot be exported\. \(Service: AmazonEC2; Status Code: 400; Error Code: NotExportable; Request ID: <RequestID>\)**  
+You can only export certain instances\. For more information, see [Considerations for instance export](vmexport.md#vmexport-limits)\.
 
 **Error starting instances: Invalid value <instance ID> for instanceId\. Instance does not have a volume attached at root \(/dev/sda1\)\.**  
 You attempted to start the instance before the VM import process and all conversion tasks were complete\. Wait for the VM import process and all conversion tasks to completely finish, and then start the instance\.
 
-## Windows VM Errors<a name="windows-vm-errors"></a>
+## Windows VM errors<a name="windows-vm-errors"></a>
 
 ### ClientError: Booter Networking failure/instance not reachable\. Please retry after installation of \.Net framework 3\.5 SP1 or greater\.<a name="ClientErrorBooterNetworkingFailure"></a>
 
@@ -121,7 +121,7 @@ This inability of the virtual disk image to boot up and establish network connec
 **Cause**: During the import process of a virtual machine, we could not find the boot partition\.  
 **Resolution**: Ensure that the disk you are importing has a boot partition\.
 
-## Linux VM Errors<a name="linux-vm-errors"></a>
+## Linux VM errors<a name="linux-vm-errors"></a>
 
 **ClientError: Invalid configuration \- Could not read fstab**  
 Linux VMs with multi\-boot volumes or multiple `/etc` directories are not supported\.

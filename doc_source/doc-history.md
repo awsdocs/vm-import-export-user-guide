@@ -1,4 +1,4 @@
-# Document History for VM Import/Export<a name="doc-history"></a>
+# Document history for VM Import/Export<a name="doc-history"></a>
 
 The following table describes the documentation for this release of VM Import/Export\.
 

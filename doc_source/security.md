@@ -9,9 +9,9 @@ Security is a shared responsibility between AWS and you\. The [shared responsibi
 This documentation helps you understand how to apply the shared responsibility model when using VM Import/Export\. It shows you how to configure VM Import/Export to meet your security and compliance objectives\. You also learn how to use other AWS services that help you to monitor and secure your VM Import/Export resources\.
 
 **Topics**
-+ [Data Protection in VM Import/Export](data-protection.md)
-+ [Compliance Validation for VM Import/Export](compliance-validation.md)
++ [Data protection in VM Import/Export](data-protection.md)
++ [Compliance validation for VM Import/Export](compliance-validation.md)
 + [Resilience in VM Import/Export](disaster-recovery-resiliency.md)
-+ [Infrastructure Security in VM Import/Export](infrastructure-security.md)
++ [Infrastructure security in VM Import/Export](infrastructure-security.md)
 
 For more information about security and EC2 instances, Amazon Machine Images \(AMI\), and EBS volumes, see [Security in Amazon EC2](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-security.html) in the *Amazon EC2 User Guide*\.

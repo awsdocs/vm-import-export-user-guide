@@ -1,4 +1,4 @@
-# Importing a Disk as a Snapshot Using VM Import/Export<a name="vmimport-import-snapshot"></a>
+# Importing a disk as a snapshot using VM Import/Export<a name="vmimport-import-snapshot"></a>
 
 VM Import/Export enables you to import your disks as Amazon EBS snapshots\. After the snapshot is created, you can create an EBS volume from the snapshot, and then attach the volume to an EC2 instance\.
 
@@ -9,7 +9,7 @@ An imported snapshot has an arbitrary volume ID that should not be used for any 
 + You must first upload your disks to Amazon S3\.
 + If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
-## Start an Import Snapshot Task<a name="start-import-task"></a>
+## Start an import snapshot task<a name="start-import-task"></a>
 
 Use the following [import\-snapshot](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-snapshot.html) command to import a disk\. You can specify the URL of the S3 bucket, or provide the S3 bucket name and key\.
 
@@ -51,7 +51,7 @@ The following is an example response:
 }
 ```
 
-## Monitor an Import Snapshot Task<a name="check-status-import-task"></a>
+## Monitor an import snapshot task<a name="check-status-import-task"></a>
 
 Use the [describe\-import\-snapshot\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-snapshot-tasks.html) command to check the status of an import snapshot task\.
 
@@ -84,7 +84,7 @@ The following is an example response\. The status shown is `active`, which means
 }
 ```
 
-## Cancel an Import Snapshot Task<a name="cancel-import-task"></a>
+## Cancel an import snapshot task<a name="cancel-import-task"></a>
 
 If you need to, you can cancel an import task that is in progress using the [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command\.
 
@@ -92,7 +92,7 @@ If you need to, you can cancel an import task that is in progress using the [can
 aws ec2 cancel-import-task --import-task-id import-snap-1234567890abcdef0
 ```
 
-## Next Steps<a name="import-snapshot-next-steps"></a>
+## Next steps<a name="import-snapshot-next-steps"></a>
 
 You can create one or more EBS volumes from an EBS snapshot\. You can attach each EBS volume to a single EC2 instance\.
 

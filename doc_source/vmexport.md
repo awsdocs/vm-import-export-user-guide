@@ -1,4 +1,4 @@
-# Exporting an Instance as a VM Using VM Import/Export<a name="vmexport"></a>
+# Exporting an instance as a VM using VM Import/Export<a name="vmexport"></a>
 
 Exporting as a VM is useful when you want to deploy a copy of an Amazon EC2 instance in your on\-site virtualization environment\. You can export most EC2 instances to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\.
 
@@ -9,10 +9,10 @@ When you export an instance, you are charged the standard Amazon S3 rates for th
 
 **Topics**
 + [Prerequisites](#vmexport-prerequisites)
-+ [Considerations for Instance Export](#vmexport-limits)
-+ [Start an Instance Export Task](#export-instance)
-+ [Monitor an Instance Export Task](#vmexport-monitor)
-+ [Cancel an Instance Export Task](#vmexport-cancel)
++ [Considerations for instance export](#vmexport-limits)
++ [Start an instance export task](#export-instance)
++ [Monitor an instance export task](#vmexport-monitor)
++ [Cancel an instance export task](#vmexport-cancel)
 
 ## Prerequisites<a name="vmexport-prerequisites"></a>
 
@@ -24,23 +24,25 @@ To export a VM from Amazon EC2, first meet the following prerequisites\.
 
     For `Grantee`, provide the appropriate Region\-specific canonical account ID:  
 **Africa \(Cape Town\)**  
-`3f7744aeebaf91dd60ab135eb1cf908700c8d2bc9133e61261e6c582be6e33ee`  
+3f7744aeebaf91dd60ab135eb1cf908700c8d2bc9133e61261e6c582be6e33ee  
 **Asia Pacific \(Hong Kong\)**  
-`97ee7ab57cc9b5034f31e107741a968e595c0d7a19ec23330eae8d045a46edfb`  
+97ee7ab57cc9b5034f31e107741a968e595c0d7a19ec23330eae8d045a46edfb  
+**Asia Pacific \(Osaka\)**  
+40f22ffd22d6db3b71544ed6cd00c8952d8b0a63a87d58d5b074ec60397db8c9  
 **Europe \(Milan\)**  
-`04636d9a349e458b0c1cbf1421858b9788b4ec28b066148d4907bb15c52b5b9c`  
+04636d9a349e458b0c1cbf1421858b9788b4ec28b066148d4907bb15c52b5b9c  
 **Middle East \(Bahrain\)**  
-`aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f`  
-**China \(Beijing\)**  
-`834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f`  
+aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f  
+**China \(Beijing\) and China \(Ningxia\)**  
+834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f  
 **AWS GovCloud \(US\)**  
-`af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602`  
+af913ca13efe7a94b88392711f6cfc8aa07c9d1454d4f190a624b126733a5602  
 **All other Regions**  
-`c4d8eabf8db69dbe46bfe0e517100c554f01200b104d59cd408e777ba442a322`
+c4d8eabf8db69dbe46bfe0e517100c554f01200b104d59cd408e777ba442a322
   + `READ_ACP` permission
   + `WRITE` permission
 
-## Considerations for Instance Export<a name="vmexport-limits"></a>
+## Considerations for instance export<a name="vmexport-limits"></a>
 
 Exporting instances and volumes is subject to the following limitations:
 + You must export your instances and volumes to one of the following image formats that your virtualization environment supports:
@@ -59,7 +61,7 @@ Exporting instances and volumes is subject to the following limitations:
 + VMs with volumes larger than 1 TiB are not supported\.
 + You can export a volume to either an unencrypted S3 bucket or to a bucket encrypted using SSE\-S3\. You cannot export to an S3 bucket encrypted using SSE\-KMS\.
 
-## Start an Instance Export Task<a name="export-instance"></a>
+## Start an instance export task<a name="export-instance"></a>
 
 To export your instance, use the [create\-instance\-export\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/create-instance-export-task.html) command\. The exported file is written to the specified S3 bucket in the following S3 key: *prefix*export\-i\-*xxxxxxxxxxxxxxxxx*\.*format* \(for example, my\-export\-bucket/vms/export\-i\-1234567890abcdef0\.ova\)\.
 
@@ -78,7 +80,7 @@ The file `file.json` is a JSON document that contains the required information\.
 }
 ```
 
-## Monitor an Instance Export Task<a name="vmexport-monitor"></a>
+## Monitor an instance export task<a name="vmexport-monitor"></a>
 
 To monitor the export of your instance, use the following [describe\-export\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-export-tasks.html) command:
 
@@ -86,7 +88,7 @@ To monitor the export of your instance, use the following [describe\-export\-tas
 aws ec2 describe-export-tasks --export-task-ids export-i-1234567890abcdef0
 ```
 
-## Cancel an Instance Export Task<a name="vmexport-cancel"></a>
+## Cancel an instance export task<a name="vmexport-cancel"></a>
 
 If you need to, you can use the following [cancel\-export\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-export-task.html) command to cancel the export of an instance that is in progress\.
 

@@ -1,4 +1,4 @@
-# What Is VM Import/Export?<a name="what-is-vmimport"></a>
+# What is VM Import/Export?<a name="what-is-vmimport"></a>
 
 VM Import/Export enables you to import virtual machine \(VM\) images from your existing virtualization environment to Amazon EC2, and then export them back\. This enables you to migrate applications and workloads to Amazon EC2, copy your VM image catalog to Amazon EC2, or create a repository of VM images for backup and disaster recovery\.
 
@@ -13,12 +13,12 @@ VM Import provides the following features:
 + The ability to import disks as Amazon EBS snapshots\.
 + VM import supports ENA drivers for Linux\. ENA support will be enabled only if the original VM has ENA and/or NVMe drivers installed\. We recommend installing the latest drivers\.
 
-## How to Get Started with VM Import/Export<a name="vmimport-where-do-i-go"></a>
+## How to get started with VM Import/Export<a name="vmimport-where-do-i-go"></a>
 
 First, you must decide whether you will import your VMs as AMIs or instances\. To get started, read about how image import and instance import work\. You can also read through the prerequisites and limitations of each method\. For more information, see:
-+ [How VM Import/Export Works](how-vm-import-export-works.md)
-+ [Importing a VM as an Image Using VM Import/Export](vmimport-image-import.md)
-+ [Importing a Disk as a Snapshot Using VM Import/Export](vmimport-import-snapshot.md)
++ [How VM Import/Export works](how-vm-import-export-works.md)
++ [Importing a VM as an image using VM Import/Export](vmimport-image-import.md)
++ [Importing a disk as a snapshot using VM Import/Export](vmimport-import-snapshot.md)
 
 ## Accessing VM Import/Export<a name="vmimport-interface"></a>
 
@@ -40,9 +40,9 @@ If you prefer to build applications using language\-specific APIs instead of sub
 
 With Amazon Web Services, you pay only for what you use\. There is no additional fee to use VM Import/Export\. You pay the standard fees for the S3 buckets and EBS volumes used during the import and export processes, and for the EC2 instances that you run\.
 
-## Related Services<a name="vmimport-related-services"></a>
+## Related services<a name="vmimport-related-services"></a>
 
 Consider the following services as you plan your migration to AWS:
 + You can use the Application Discovery Service to gather information about your data center, such as server utilization data and dependency mappings, so that you can view information about your workloads\. For more information, see the [Application Discovery Service User Guide](https://docs.aws.amazon.com/application-discovery/latest/userguide/)\.
 + If you use VMware vSphere, Microsoft Hyper\-V, or Microsoft Azure, you can use AWS Server Migration Service \(AWS SMS\) to automate the migration of your virtual machines to AWS\. For more information, see the [AWS SMS User Guide](https://docs.aws.amazon.com/server-migration-service/latest/userguide/)\.
-+ If you use Microsoft Systems Center, you can use AWS Systems Manager for Microsoft SCVMM to import Windows VMs from SCVMM to Amazon EC2\. For more information, see [Importing Your Virtual Machine Using AWS Systems Manager for Microsoft SCVMM](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/scvmm-import-vm.html) in the *Amazon EC2 User Guide for Windows Instances*\.
++ If you use Microsoft Systems Center, you can use AWS Systems Manager for Microsoft SCVMM to import Windows VMs from SCVMM to Amazon EC2\. For more information, see [Import your virtual machine using AWS Systems Manager for Microsoft SCVMM](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/scvmm-import-vm.html) in the *Amazon EC2 User Guide for Windows Instances*\.

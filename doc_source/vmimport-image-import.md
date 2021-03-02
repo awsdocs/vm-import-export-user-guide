@@ -1,15 +1,15 @@
-# Importing a VM as an Image Using VM Import/Export<a name="vmimport-image-import"></a>
+# Importing a VM as an image using VM Import/Export<a name="vmimport-image-import"></a>
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as Amazon Machine Images \(AMI\), which you can use to launch instances\. Subsequently, you can export the VM images from an instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
 **Topics**
-+ [Export Your VM from its Virtualization Environment](#export-vm-image)
-+ [Import Your VM as an Image](#import-vm-image)
-+ [Monitor an Import Image Task](#check-import-task-status)
-+ [Cancel an Import Image Task](#cancel-upload)
-+ [Next Steps](#next-steps)
++ [Export your VM from its virtualization environment](#export-vm-image)
++ [Import your VM as an image](#import-vm-image)
++ [Monitor an import image task](#check-import-task-status)
++ [Cancel an import image task](#cancel-upload)
++ [Next steps](#next-steps)
 
-## Export Your VM from its Virtualization Environment<a name="export-vm-image"></a>
+## Export your VM from its virtualization environment<a name="export-vm-image"></a>
 
 After you have prepared your VM for export, you can export it from your virtualization environment\. When importing a VM as an image, you can import disks in the following formats: Open Virtualization Archive \(OVA\), Virtual Machine Disk \(VMDK\), Virtual Hard Disk \(VHD/VHDX\), and raw\. With some virtualization environments, you would export to Open Virtualization Format \(OVF\), which typically includes one or more VMDK, VHD, or VHDX files, and then package the files into an OVA file\.
 
@@ -19,21 +19,21 @@ For more information, see the documentation for your virtualization environment\
 + **Microsoft Hyper\-V** — [Overview of exporting and importing a virtual machine](https://technet.microsoft.com/en-us/library/hh831535.aspx) on the Microsoft website
 + **Microsoft Azure** — [Download a Windows VHD from Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/windows/download-vhd) or [Download a Linux VHD from Azure](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/download-vhd) on the Microsoft website\. From the Azure Portal, choose the VM to migrate, and then choose **Disks**\. Select each disk \(either OS or data\) and choose **Create Snapshot**\. On the completed snapshot resource, choose **Export**\. This creates a URL that you can use to download the virtual image\.
 
-## Import Your VM as an Image<a name="import-vm-image"></a>
+## Import your VM as an image<a name="import-vm-image"></a>
 
 After exporting your VM from your virtualization environment, you can import it to Amazon EC2\. The import process is the same regardless of the origin of the VM\.
 
 **Topics**
 + [Prerequisites](#import-image-prereqs)
-+ [Upload the Image to Amazon S3](#upload-image)
++ [Upload the image to Amazon S3](#upload-image)
 + [Import the VM](#import-vm)
 
 ### Prerequisites<a name="import-image-prereqs"></a>
 + Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to import your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
-+ Create an IAM role named `vmimport`\. For more information, see [Required Service Role](vmie_prereqs.md#vmimport-role)\.
++ Create an IAM role named `vmimport`\. For more information, see [Required service role](vmie_prereqs.md#vmimport-role)\.
 + If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 
-### Upload the Image to Amazon S3<a name="upload-image"></a>
+### Upload the image to Amazon S3<a name="upload-image"></a>
 
 Upload your VM image file to your Amazon S3 bucket using the upload tool of your choice\. For information about uploading objects through the Amazon S3 console, see [Uploading Objects](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/upload-objects.html)\.
 
@@ -106,7 +106,7 @@ aws ec2 import-image --description "My server disks" --encrypted --kms-key-id 0e
 
 The CMK provided for encryption must not be disabled during the entire import process\. For more information, see [Amazon EBS Encryption](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html) in the *Amazon EC2 User Guide*\.
 
-## Monitor an Import Image Task<a name="check-import-task-status"></a>
+## Monitor an import image task<a name="check-import-task-status"></a>
 
 Use the [describe\-import\-image\-tasks](https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-import-image-tasks.html) command to return the status of an import task\.
 
@@ -150,7 +150,7 @@ After the import image task is completed, the output includes the ID of the AMI\
 }
 ```
 
-## Cancel an Import Image Task<a name="cancel-upload"></a>
+## Cancel an import image task<a name="cancel-upload"></a>
 
 If you need to cancel an active import task, use the [cancel\-import\-task](https://docs.aws.amazon.com/cli/latest/reference/ec2/cancel-import-task.html) command\.
 
@@ -158,7 +158,7 @@ If you need to cancel an active import task, use the [cancel\-import\-task](http
 aws ec2 cancel-import-task --import-task-id import-ami-1234567890abcdef0
 ```
 
-## Next Steps<a name="next-steps"></a>
+## Next steps<a name="next-steps"></a>
 
 After the import image task is complete, you can launch an instance using the resulting AMI or copy the AMI to another Region\.
 

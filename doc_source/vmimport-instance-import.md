@@ -1,7 +1,7 @@
-# Importing a VM as an Instance Using VM Import/Export<a name="vmimport-instance-import"></a>
+# Importing a VM as an instance using VM Import/Export<a name="vmimport-instance-import"></a>
 
 **Important**  
-We strongly recommend that you import VMs as Amazon Machine Images \(AMI\) instead of instances\. For more information, see [Importing a VM as an Image Using VM Import/Export](vmimport-image-import.md)\.
+We strongly recommend that you import VMs as Amazon Machine Images \(AMI\) instead of instances\. For more information, see [Importing a VM as an image using VM Import/Export](vmimport-image-import.md)\.
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as instances\. Subsequently, you can export the VM images from the instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
