@@ -42,7 +42,7 @@ With Amazon Web Services, you pay only for what you use\. There is no additional
 
 ## Related Services<a name="vmimport-related-services"></a>
 
-VM Import/Export works with the following services:
-+ To plan your application migration, you can use the Application Discovery Service\. This service identifies assets, maps the dependencies between assets, and provides an inventory of assets that you can query\. For more information, see the [Application Discovery Service User Guide](https://docs.aws.amazon.com/application-discovery/latest/userguide/)\.
-+ If you're using VMware vSphere, you can use the AWS Connector for vCenter to export a VM from VMware and import it into Amazon EC2\. For more information, see [Install the Server Migration Connector on VMware](https://docs.aws.amazon.com/server-migration-service/latest/userguide/VMware.html) in the *AWS Server Migration Service User Guide* and [VM Import/Export](https://aws.amazon.com/ec2/vm-import/) in the *Amazon EC2 Products and Services page*\.
+Consider the following services as you plan your migration to AWS:
++ You can use the Application Discovery Service to gather information about your data center, such as server utilization data and dependency mappings, so that you can view information about your workloads\. For more information, see the [Application Discovery Service User Guide](https://docs.aws.amazon.com/application-discovery/latest/userguide/)\.
++ If you use VMware vSphere, Microsoft Hyper\-V, or Microsoft Azure, you can use AWS Server Migration Service \(AWS SMS\) to automate the migration of your virtual machines to AWS\. For more information, see the [AWS SMS User Guide](https://docs.aws.amazon.com/server-migration-service/latest/userguide/)\.
 + If you use Microsoft Systems Center, you can use AWS Systems Manager for Microsoft SCVMM to import Windows VMs from SCVMM to Amazon EC2\. For more information, see [Importing Your Virtual Machine Using AWS Systems Manager for Microsoft SCVMM](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/scvmm-import-vm.html) in the *Amazon EC2 User Guide for Windows Instances*\.
