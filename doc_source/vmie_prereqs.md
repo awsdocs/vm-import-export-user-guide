@@ -114,7 +114,8 @@ Linux operating systems support only BYOL licenses\. Choosing **Auto** means tha
 
 Migrated Red Hat Enterprise Linux \(RHEL\) VMs must use Cloud Access \(BYOL\) licenses\. For more information, see [Red Hat Cloud Access](https://www.redhat.com/en/technologies/cloud-computing/cloud-access) on the Red Hat website\.
 
-Migrated SUSE Linux Enterprise Server VMs must use SUSE Public Cloud Program \(BYOS\) licenses\. For more information, see [SUSE Public Cloud Program—Bring Your Own Subscription](https://www.suse.com/docrep/documents/h4jlnjpfx3/suse_public_cloud_program_bring_your_own_subscription_faq_external.pdf)\.
+Migrated SUSE Linux Enterprise Server VMs must use SUSE Public Cloud Program \(BYOS\) licenses\. For more information, see [SUSE Public Cloud Program—Bring Your Own Subscription](https://links.imagerelay.com/cdn/3404/ql/8ab6fadc32604949b597dd866f57dc57/suse_subscription_portability_in_the_public_cloud_flyer![image](https://user-images.githubusercontent.com/9853029/125139055-ac11ed80-e0c4-11eb-8127-63f82ef043c0.png)
+.pdf)\.
 
 ### Licensing for Windows<a name="windows"></a>
 
