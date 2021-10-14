@@ -2,9 +2,6 @@
 
 Exporting as a VM is useful when you want to deploy a copy of an Amazon EC2 instance in your on\-site virtualization environment\. You can export most EC2 instances to Citrix Xen, Microsoft Hyper\-V, or VMware vSphere\.
 
-**Note**  
-If you're using VMware vSphere, you can alternatively use the AWS Connector for vCenter to export a VM from Amazon EC2\. For more information, see [Exporting a Migrated Amazon EC2 Instance](https://docs.aws.amazon.com/amp/latest/userguide/migrate-vms.html#export-instance) in the *AWS Management Portal for vCenter User Guide*\.
-
 When you export an instance, you are charged the standard Amazon S3 rates for the bucket where the exported VM is stored\. In addition, there might be a small charge for the temporary use of an Amazon EBS snapshot\. For more information about Amazon S3 pricing, see [Amazon Simple Storage Service Pricing](https://aws.amazon.com/s3/pricing/)\.
 
 **Topics**

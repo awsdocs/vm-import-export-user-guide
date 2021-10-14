@@ -43,7 +43,7 @@ After you upload your VM image file to Amazon S3, you can use the AWS CLI to imp
 
 The following examples use the AWS CLI command [import\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/import-image.html) to create import tasks\.
 
-**Example 1: Import an OVA**
+**Example 1: Import an image with a single disk**
 
 Use the following command to import an image with a single disk\.
 
@@ -51,7 +51,7 @@ Use the following command to import an image with a single disk\.
 aws ec2 import-image --description "My server VM" --disk-containers "file://C:\import\containers.json"
 ```
 
-The following is an example `containers.json` file\.
+The following is an example `containers.json` file that specifies the image using an S3 bucket\.
 
 ```
 [
@@ -62,10 +62,23 @@ The following is an example `containers.json` file\.
         "S3Bucket": "my-import-bucket",
         "S3Key": "vms/my-server-vm.ova"
     }
-}]
+  }
+]
 ```
 
-**Example 2: Import Multiple Disks**
+The following is an example `containers.json` file that specifies the image using a URL in Amazon S3\.
+
+```
+[
+  {
+    "Description": "My Server OVA",
+    "Format": "ova",
+    "Url": "s3://my-import-bucket/vms/my-server-vm.ova"
+  }
+]
+```
+
+**Example 2: Import an image with multiple disks**
 
 Use the following command to import an image with multiple disks\.
 
@@ -96,7 +109,7 @@ The following is an example `containers.json` file\.
 ]
 ```
 
-**Example 3: Import Disk with Encrypted Option Enabled**
+**Example 3: Import with the encrypted option enabled**
 
 Use the following command to import an image with an encrypted root volume\.
 

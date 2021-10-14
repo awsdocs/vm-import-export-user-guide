@@ -34,7 +34,7 @@ Exporting images and volumes is subject to the following limitations:
 + You can't have multiple export image tasks in progress for the same AMI at the same time\.
 + By default, you can't have more than 5 conversion tasks per Region in progress at the same time\. This limit is adjustable up to 20\.
 + VMs with volumes larger than 1 TiB are not supported\.
-+ You can export a volume to either an unencrypted Amazon S3 bucket or to a bucket encrypted using AWS\-256 encryption\. You cannot export to an S3 bucket encrypted using AWS\-KMS encryption\.
++ You can export a volume to either an unencrypted Amazon S3 bucket or to a bucket encrypted using SSE\-S3 encryption\. You cannot export to an S3 bucket encrypted using SSE\-KMS encryption\.
 
 ## Start an export image task<a name="start-image-export"></a>
 

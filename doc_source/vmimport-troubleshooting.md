@@ -11,7 +11,7 @@ When importing or exporting a virtual machine \(VM\), most errors occur because 
 
 ## Import image errors<a name="import-image-errors"></a>
 
-**AWS Error Code: InvalidParameter, AWS Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
+**Error Code: InvalidParameter, Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
 The specified image format is not supported\. Retry the operation using one of the following supported image formats: VHD, VHDX, VMDK, or raw\.
 
 **A client error \(MalformedPolicyDocument\) occurred when calling the CreateRole operation: Syntax errors in policy**  
@@ -39,7 +39,7 @@ This error can also occur if the user calling `ImportImage` has `Decrypt` permis
 
 ## Import instance errors<a name="import-instance-errors"></a>
 
-**AWS Error Code: InvalidParameter, AWS Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
+**Error Code: InvalidParameter, Error Message: Message: Parameter disk\-image\-size=0 has an invalid format**  
 The specified image format is not supported\. Retry the operation using one of the following supported image formats: OVA, VHD, VMDK, or raw\.
 
 **Client\.Unsupported: No bootable partition found\. \(Service: AmazonEC2; Status Code: 400; Error Code: Unsupported; Request ID: <RequestID>\)**  
