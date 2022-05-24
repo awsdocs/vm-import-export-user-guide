@@ -6,6 +6,7 @@ Before attempting to import a VM, take action as needed to meet the following re
 + [System requirements](#prerequisites)
   + [Image formats](#vmimport-image-formats)
   + [Operating systems](#vmimport-operating-systems)
+  + [Boot modes](#vmimport-boot-modes)
   + [Volume types and file systems](#vmimport-volume-types)
 + [Licensing options](#licensing)
   + [Licensing for Linux](#linux)
@@ -78,17 +79,39 @@ The following operating systems can be imported to and exported from Amazon EC2\
 + SUSE Linux Enterprise Server 12 with Service Pack 1 and kernel 3\.12\.49\-11
 + SUSE Linux Enterprise Server 12 with Service Pack 2 and kernel 4\.4
 + SUSE Linux Enterprise Server 12 with Service Pack 3 and kernel 4\.4
++ SUSE Linux Enterprise Server 12 with Service Pack 4 and kernel 4\.12
++ SUSE Linux Enterprise Server 12 with Service Pack 5 and kernel 4\.12 
++ SUSE Linux Enterprise Server 15 with kernel 4\.12
++ SUSE Linux Enterprise Server 15 with Service Pack 1 and kernel 4\.12
++ SUSE Linux Enterprise Server 15 with Service Pack 2 and kernel 5\.3
 + Ubuntu 12\.04, 12\.10, 13\.04, 13\.10, 14\.04, 14\.10, 15\.04, 16\.04, 16\.10, 17\.04, 18\.04, and 20\.04, with a supported kernel\. For example, Ubuntu 18\.04 requires kernel 4\.15\.
+
+### Boot modes<a name="vmimport-boot-modes"></a>
+
+When a computer boots, the first software that it runs is responsible for initializing the platform and providing an interface for the operating system to perform platform\-specific operations\. VM Import/Export supports two variants of the boot mode: Unified Extensible Firmware Interface \(UEFI\) and Legacy BIOS\. You can choose whether to specify the optional `--boot-mode` parameter as `legacy-bios` or `uefi` when importing your VM\.
+
+Refer to the [Boot Modes](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html) section of the *Amazon Elastic Compute Cloud User Guide* for more information about specifying a boot mode, and UEFI variables\.
 
 ### Volume types and file systems<a name="vmimport-volume-types"></a>
 
-VM Import/Export supports importing Windows and Linux instances with the following file systems:
+VM Import/Export supports importing Windows and Linux VMs with the following file systems:
 
 **Windows**  
-MBR\-partitioned volumes and GUID Partition Table \(GPT\) partitioned volumes that are formatted using the NTFS file system\. For GPT\-partitioned volumes, only VHDX is supported as an image format\.
+GUID Partition Table \(GPT\) and Master Boot Record \(MBR\) partitioned volumes that are formatted using the NTFS file system are supported\. If no boot parameter is specified, and the VM is compatible in both boot modes, the GPT volumes will be converted to MBR partitioned volumes\.
+
+**Note**  
+VM Import/Export will automatically detect the boot modes your Windows VM is compatible with\. If the Windows VM is only compatible in a single boot mode, you don't need to specify a specific `--boot-mode` parameter\.  
+If your Windows VM is compatible with both boot modes, and the following criteria is met for the imported disk, VM Import/Export will select Legacy BIOS by default\. You can specify `uefi` for the `--boot-mode` parameter to override this behavior\.  
+The disk is smaller than 2 terabytes
+The disk does not contain more than 4 primary partitions
+The disk is not a Windows dynamic disk
+The file format is VHDX
 
 **Linux/Unix**  
-MBR\-partitioned volumes that are formatted using the ext2, ext3, ext4, Btrfs, JFS, or XFS file system\. Btrfs subvolumes are not supported\. GUID Partition Table \(GPT\) partitioned volumes are not supported\.
+MBR partitioned volumes and GUID Partition Table \(GPT\) partitioned volumes that are formatted using the ext2, ext3, ext4, Btrfs, JFS, or XFS file system are supported\.
+
+**Important**  
+Btrfs subvolumes are not supported\.
 
 ## Licensing options<a name="licensing"></a>
 
@@ -161,8 +184,7 @@ Linux operating systems support only BYOL licenses\. Choosing **Auto** means tha
 
 Migrated Red Hat Enterprise Linux \(RHEL\) VMs must use Cloud Access \(BYOL\) licenses\. For more information, see [Red Hat Cloud Access](https://www.redhat.com/en/technologies/cloud-computing/cloud-access) on the Red Hat website\.
 
-Migrated SUSE Linux Enterprise Server VMs must use SUSE Public Cloud Program \(BYOS\) licenses\. For more information, see [SUSE Public Cloud Program—Bring Your Own Subscription](https://links.imagerelay.com/cdn/3404/ql/8ab6fadc32604949b597dd866f57dc57/suse_subscription_portability_in_the_public_cloud_flyer![image](https://user-images.githubusercontent.com/9853029/125139055-ac11ed80-e0c4-11eb-8127-63f82ef043c0.png)
-.pdf)\.
+Migrated SUSE Linux Enterprise Server VMs must use SUSE Public Cloud Program \(BYOS\) licenses\. For more information, see [SUSE Public Cloud Program—Bring Your Own Subscription](https://www.suse.com/media/flyer/suse_subscription_portability_in_the_public_cloud_flyer.pdf)\.
 
 ### Licensing for Windows<a name="windows"></a>
 
@@ -381,6 +403,8 @@ Use the following guidelines to configure your VM before exporting it from the v
 
 **General**
 + Install the AWS CLI on the workstation you will use to issue import commands\. For more information, see [Installing the AWS Command Line Interface](https://docs.aws.amazon.com/cli/latest/userguide/installing.html) in the *AWS Command Line Interface User Guide*\.
+**Tip**  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
 + Disable any antivirus or intrusion detection software on your VM\. These services can be re\-enabled after the import process is complete\.
 + Uninstall the VMware Tools from your VMware VM\.
 + Disconnect any CD\-ROM drives \(virtual or physical\)\.

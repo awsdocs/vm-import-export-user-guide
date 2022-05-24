@@ -29,9 +29,11 @@ After exporting your VM from your virtualization environment, you can import it 
 + [Import the VM](#import-vm)
 
 ### Prerequisites<a name="import-image-prereqs"></a>
-+ Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to import your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
++ Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to import your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
 + Create an IAM role named `vmimport`\. For more information, see [Required service role](vmie_prereqs.md#vmimport-role)\.
 + If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+**Tip**  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
 
 ### Upload the image to Amazon S3<a name="upload-image"></a>
 

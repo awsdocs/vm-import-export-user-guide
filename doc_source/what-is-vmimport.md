@@ -34,7 +34,8 @@ Provides commands for a broad set of AWS products for those who script in the Po
 Amazon EC2 provides a Query API\. These requests are HTTP or HTTPS requests that use the HTTP verbs GET or POST and a Query parameter named `Action`\. For more information about the API actions for Amazon EC2, see [Actions](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-apis.html) in the *Amazon EC2 API Reference*\.
 
 **AWS SDKs and Tools**  
-If you prefer to build applications using language\-specific APIs instead of submitting a request over HTTP or HTTPS, AWS provides libraries, sample code, tutorials, and other resources for software developers\. These libraries provide basic functions that automate tasks such as cryptographically signing your requests, retrying requests, and handling error responses, making it is easier for you to get started\. For more information, see [AWS SDKs and Tools](http://aws.amazon.com/tools/)\.
+If you prefer to build applications using language\-specific APIs instead of submitting a request over HTTP or HTTPS, AWS provides libraries, sample code, tutorials, and other resources for software developers\. These libraries provide basic functions that automate tasks such as cryptographically signing your requests, retrying requests, and handling error responses, making it is easier for you to get started\. For more information, see [AWS SDKs and Tools](http://aws.amazon.com/tools/)\.  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
 
 ## Pricing<a name="vmimport-pricing"></a>
 
@@ -44,5 +45,5 @@ With Amazon Web Services, you pay only for what you use\. There is no additional
 
 Consider the following services as you plan your migration to AWS:
 + You can use the Application Discovery Service to gather information about your data center, such as server utilization data and dependency mappings, so that you can view information about your workloads\. For more information, see the [Application Discovery Service User Guide](https://docs.aws.amazon.com/application-discovery/latest/userguide/)\.
-+ If you use VMware vSphere, Microsoft Hyper\-V, or Microsoft Azure, you can use AWS Server Migration Service \(AWS SMS\) to automate the migration of your virtual machines to AWS\. For more information, see the [AWS SMS User Guide](https://docs.aws.amazon.com/server-migration-service/latest/userguide/)\.
++ If you use VMware vSphere, Microsoft Hyper\-V, or Microsoft Azure, you can use AWS Application Migration Service to automate the migration of your virtual machines to AWS\. For more information, see the [Application Migration Service User Guide](https://docs.aws.amazon.com/mgn/latest/ug/what-is-application-migration-service.html)\.
 + If you use Microsoft Systems Center, you can use AWS Systems Manager for Microsoft SCVMM to import Windows VMs from SCVMM to Amazon EC2\. For more information, see [Import your virtual machine using AWS Systems Manager for Microsoft SCVMM](https://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/scvmm-import-vm.html) in the *Amazon EC2 User Guide for Windows Instances*\.

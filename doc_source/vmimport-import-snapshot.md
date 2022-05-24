@@ -8,6 +8,8 @@ An imported snapshot has an arbitrary volume ID that should not be used for any 
 + The following disk formats are supported: Virtual Hard Disk \(VHD/VHDX\), ESX Virtual Machine Disk \(VMDK\), and raw\.
 + You must first upload your disks to Amazon S3\.
 + If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
+**Tip**  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
 
 ## Start an import snapshot task<a name="start-import-task"></a>
 

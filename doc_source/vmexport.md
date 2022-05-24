@@ -15,8 +15,12 @@ When you export an instance, you are charged the standard Amazon S3 rates for th
 
 To export a VM from Amazon EC2, first meet the following prerequisites\.
 + Install the AWS CLI\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
-+ Create an Amazon S3 bucket for storing the exported instances or choose an existing bucket\. The bucket must be in the Region where you want export your VMs\. For more information, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
-+ Attach an access control list \(ACL\) to your S3 bucket containing the following grants\. For more information, see [Managing Access with ACLs](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html) in the *Amazon Simple Storage Service Developer Guide*\.
+**Tip**  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
++ Create an Amazon S3 bucket for storing the exported instances or choose an existing bucket\. The bucket must be in the Region where you want export your VMs\. For more information, see the [Amazon Simple Storage Service User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
++ Attach an access control list \(ACL\) to your S3 bucket containing the following grants\. For more information, see [Managing Access with ACLs](https://docs.aws.amazon.com/AmazonS3/latest/dev/S3_ACLs_UsingACLs.html) in the *Amazon Simple Storage Service User Guide*\.
+**Note**  
+ You can't export a VM to an S3 bucket that uses the bucket owner enforced setting for S3 Object Ownership because ACLs are disabled\. For more information, see [Controlling Object Ownership and disabling ACLs](https://docs.aws.amazon.com/AmazonS3/latest/userguide/about-object-ownership.html) in the *Amazon S3 User Guide*\.
   + 
 
     For `Grantee`, provide the appropriate Region\-specific canonical account ID:  
@@ -24,6 +28,8 @@ To export a VM from Amazon EC2, first meet the following prerequisites\.
 3f7744aeebaf91dd60ab135eb1cf908700c8d2bc9133e61261e6c582be6e33ee  
 **Asia Pacific \(Hong Kong\)**  
 97ee7ab57cc9b5034f31e107741a968e595c0d7a19ec23330eae8d045a46edfb  
+**Asia Pacific \(Jakarta\)**  
+de34aaa6b2875fa3d5086459cb4e03147cf1a9f7d03d82f02bedb991ff3d1df5  
 **Asia Pacific \(Osaka\)**  
 40f22ffd22d6db3b71544ed6cd00c8952d8b0a63a87d58d5b074ec60397db8c9  
 **Europe \(Milan\)**  

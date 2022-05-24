@@ -15,7 +15,9 @@ When you export an image, you are charged the standard Amazon S3 rates for the b
 
 To export a VM from Amazon EC2, first meet the following prerequisites\.
 + Install the AWS CLI\. For more information, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
-+ Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to export your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service Console User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
+**Tip**  
+In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
++ Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to export your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
 + Create an IAM role named `vmimport`\. For more information, see [Required service role](vmie_prereqs.md#vmimport-role)\.
 
 ## Considerations for image export<a name="limits-image-export"></a>
@@ -25,8 +27,6 @@ Exporting images and volumes is subject to the following limitations:
   + Virtual Hard Disk \(VHD\), which is compatible with Citrix Xen and Microsoft Hyper\-V virtualization products\.
   + Stream\-optimized ESX Virtual Machine Disk \(VMDK\), which is compatible with VMware ESX and VMware vSphere versions 4, 5, and 6\.
   + Raw format\.
-
-  To convert exported VMDK files to OVF, use the [VMware OVF Tool](https://www.vmware.com/support/developer/ovf/)\.
 + You can't export an image if it contains third\-party software provided by AWS\. For example, VM Export cannot export Windows or SQL Server images, or any image created from an image in the AWS Marketplace\.
 + You can't export an image with encrypted EBS snapshots in the block device mapping\.
 + You can only export EBS data volumes that are specified in the block device mapping, not EBS volumes attached after instance launch\.
