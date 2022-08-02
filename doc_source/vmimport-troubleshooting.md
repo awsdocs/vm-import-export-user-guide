@@ -74,6 +74,9 @@ You can only export certain instances\. For more information, see [Consideration
 **Error starting instances: Invalid value <instance ID> for instanceId\. Instance does not have a volume attached at root \(/dev/sda1\)\.**  
 You attempted to start the instance before the VM import process and all conversion tasks were complete\. Wait for the VM import process and all conversion tasks to completely finish, and then start the instance\.
 
+**An error occurred \(InvalidParameter\) when calling the CreateInstanceExportTask operation: The given S3 object is not local to the region\.**  
+The EC2 instance and S3 bucket must be in the same AWS Region\. You must also ensure the `create-instance-export-task` command is being run in the same Region as your resources being exported\. You can specify the Region by using `--region` parameter\. For more information, see [AWS CLI supported global command line options](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-options.html#cli-configure-options-list) in the *AWS Command Line Interface User Guide*\.
+
 ## Windows VM errors<a name="windows-vm-errors"></a>
 
 ### ClientError: Booter Networking failure/instance not reachable\. Please retry after installation of \.Net framework 3\.5 SP1 or greater\.<a name="ClientErrorBooterNetworkingFailure"></a>

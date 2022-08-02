@@ -5,7 +5,9 @@ We strongly recommend that you import VMs as Amazon Machine Images \(AMI\) inste
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as instances\. Subsequently, you can export the VM images from the instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
-**Limitations**
+## Limitations<a name="vmimport-instance-import-limitations"></a>
+
+Importing a VM as an instance has the following limitations:
 + The AWS Command Line Interface \(AWS CLI\) does not support importing a VM as an instance, so you must use the deprecated Amazon EC2 Command Line Interface \(Amazon EC2 CLI\)\.
 + You cannot import a Windows instance that uses the bring your own license \(BYOL\) model as an instance\. Instead, you must import the VM as an AMI\.
 + VM Import/Export supports importing Windows instances into most instance types\. Linux instances can be imported into the following instance types:
@@ -19,5 +21,6 @@ You can use VM Import/Export to import virtual machine \(VM\) images from your v
   + Europe/Middle East/Africa: eu\-west\-1 \| eu\-central\-1
   + Asia Pacific: ap\-southeast\-1 \| ap\-northeast\-1 \| ap\-southeast\-2 \| ap\-northeast\-2 \| ap\-south\-1 \| cn\-north\-1
 
-**To import your VM to Amazon EC2 as an instance using the legacy Amazon EC2 CLI**  
+## Prerequisites<a name="vmimport-instance-import-prerequisites"></a>
+
 You must export the VM from your virtualization environment and then import it to Amazon EC2 using the Amazon EC2 CLI, which is deprecated\. Because the Amazon EC2 CLI is deprecated, the *Amazon EC2 Command Line Reference*, which describes its use, is not maintained\. However, there is a legacy PDF version of this guide stored in Amazon S3\. To view the directions for importing a VM as an instance in the legacy PDF version of the *Amazon EC2 Command Line Reference*, see [Importing a VM to Amazon EC2](https://awsdocs.s3.amazonaws.com/EC2/ec2-clt.pdf#UsingVirtualMachinesinAmazonEC2)\.

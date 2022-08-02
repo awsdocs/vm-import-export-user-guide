@@ -2,13 +2,6 @@
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as Amazon Machine Images \(AMI\), which you can use to launch instances\. Subsequently, you can export the VM images from an instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
-**Topics**
-+ [Export your VM from its virtualization environment](#export-vm-image)
-+ [Import your VM as an image](#import-vm-image)
-+ [Monitor an import image task](#check-import-task-status)
-+ [Cancel an import image task](#cancel-upload)
-+ [Next steps](#next-steps)
-
 ## Export your VM from its virtualization environment<a name="export-vm-image"></a>
 
 After you have prepared your VM for export, you can export it from your virtualization environment\. When importing a VM as an image, you can import disks in the following formats: Open Virtualization Archive \(OVA\), Virtual Machine Disk \(VMDK\), Virtual Hard Disk \(VHD/VHDX\), and raw\. With some virtualization environments, you would export to Open Virtualization Format \(OVF\), which typically includes one or more VMDK, VHD, or VHDX files, and then package the files into an OVA file\.
@@ -30,7 +23,7 @@ After exporting your VM from your virtualization environment, you can import it 
 
 ### Prerequisites<a name="import-image-prereqs"></a>
 + Create an Amazon S3 bucket for storing the exported images or choose an existing bucket\. The bucket must be in the Region where you want to import your VMs\. For more information about S3 buckets, see the [Amazon Simple Storage Service User Guide](https://docs.aws.amazon.com/AmazonS3/latest/user-guide/)\.
-+ Create an IAM role named `vmimport`\. For more information, see [Required service role](vmie_prereqs.md#vmimport-role)\.
++ Create an IAM role named `vmimport`\. For more information, see [Required service role](required-permissions.md#vmimport-role)\.
 + If you have not already installed the AWS CLI on the computer you'll use to run the import commands, see the [AWS Command Line Interface User Guide](https://docs.aws.amazon.com/cli/latest/userguide/)\.
 **Tip**  
 In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/userguide/supported-aws-regions.html), you can also use [AWS CloudShell](https://docs.aws.amazon.com/cloudshell/latest/userguide/welcome.html) for a browser\-based, pre\-authenticated shell that launches directly from the AWS Management Console\.
