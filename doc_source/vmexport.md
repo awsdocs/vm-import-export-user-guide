@@ -28,14 +28,22 @@ In [ supported AWS Regions](https://docs.aws.amazon.com/cloudshell/latest/usergu
 3f7744aeebaf91dd60ab135eb1cf908700c8d2bc9133e61261e6c582be6e33ee  
 **Asia Pacific \(Hong Kong\)**  
 97ee7ab57cc9b5034f31e107741a968e595c0d7a19ec23330eae8d045a46edfb  
+**Asia Pacific \(Hyderabad\)**  
+77ab5ec9eac9ade710b7defed37fe0640f93c5eb76ea65a64da49930965f18ca  
 **Asia Pacific \(Jakarta\)**  
 de34aaa6b2875fa3d5086459cb4e03147cf1a9f7d03d82f02bedb991ff3d1df5  
 **Asia Pacific \(Osaka\)**  
 40f22ffd22d6db3b71544ed6cd00c8952d8b0a63a87d58d5b074ec60397db8c9  
 **Europe \(Milan\)**  
 04636d9a349e458b0c1cbf1421858b9788b4ec28b066148d4907bb15c52b5b9c  
+**Europe \(Spain\)**  
+6e81c4c52a37a7f59e103625162ed97bcd0e646593adb107d21310d093151518  
+**Europe \(Zurich\)**  
+5d9fcea77b2fb3df05fc15c893f212ae1d02adb4b24c13e18586db728a48da67  
 **Middle East \(Bahrain\)**  
 aa763f2cf70006650562c62a09433f04353db3cba6ba6aeb3550fdc8065d3d9f  
+**Middle East \(UAE\)**  
+7d3018832562b7b6c126f5832211fae90bd3eee3ed3afde192d990690267e475  
 **China \(Beijing\) and China \(Ningxia\)**  
 834bafd86b15b6ca71074df0fd1f93d234b9d5e848a2cb31f880c149003ce36f  
 **AWS GovCloud \(US\)**  

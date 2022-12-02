@@ -38,7 +38,7 @@ Exporting images and volumes is subject to the following limitations:
 
 ## Start an export image task<a name="start-image-export"></a>
 
-To export your image, use the [export\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/export-image.html) command\. The exported file is written to the specified S3 bucket using the following S3 key: *prefix*export\-ami\-*id*\.*format* \(for example, my\-export\-bucket/exports/export\-ami\-1234567890abcdef0\.ova\)\.
+To export your image, use the [export\-image](https://docs.aws.amazon.com/cli/latest/reference/ec2/export-image.html) command\. The exported file is written to the specified S3 bucket using the following S3 key: *prefix*export\-ami\-*id*\.*format* \(for example, my\-export\-bucket/exports/export\-ami\-1234567890abcdef0\.vmdk\)\.
 
 ```
 aws ec2 export-image --image-id ami-id --disk-image-format VMDK --s3-export-location S3Bucket=my-export-bucket,S3Prefix=exports/

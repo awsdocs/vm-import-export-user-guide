@@ -2,6 +2,9 @@
 
 You can use VM Import/Export to import virtual machine \(VM\) images from your virtualization environment to Amazon EC2 as Amazon Machine Images \(AMI\), which you can use to launch instances\. Subsequently, you can export the VM images from an instance back to your virtualization environment\. This enables you to leverage your investments in the VMs that you have built to meet your IT security, configuration management, and compliance requirements by bringing them into Amazon EC2\.
 
+**Important**  
+AWS VM Import/Export strongly recommends specifying a value for either the `--license-type` or `--usage-operation` parameter when you create a new VM Import task\. This ensures your operating system is licensed appropriately and your billing is optimized\. For more information, see [Licensing options](licensing.md)\.
+
 ## Export your VM from its virtualization environment<a name="export-vm-image"></a>
 
 After you have prepared your VM for export, you can export it from your virtualization environment\. When importing a VM as an image, you can import disks in the following formats: Open Virtualization Archive \(OVA\), Virtual Machine Disk \(VMDK\), Virtual Hard Disk \(VHD/VHDX\), and raw\. With some virtualization environments, you would export to Open Virtualization Format \(OVF\), which typically includes one or more VMDK, VHD, or VHDX files, and then package the files into an OVA file\.
